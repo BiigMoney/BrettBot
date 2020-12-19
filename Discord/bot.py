@@ -46,7 +46,7 @@ async def update(ctx):
 
 def clone():
     dir = os.getcwd()
-    os.chdir('Brett stuff')
+    os.chdir('../../Brett stuff')
     os.system("git pull")
     os.chdir(dir)
 
