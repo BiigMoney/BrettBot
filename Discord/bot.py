@@ -46,11 +46,8 @@ async def update(ctx):
 
 def clone():
     dir = os.getcwd()
-    files = glob.glob('Brett stuff/*')
-    for f in files:
-        os.remove(f)
     os.chdir('Brett stuff')
-    os.system("git clone https://github.com/Tumbles/TumbledMTG-Cockatrice.git")
+    os.system("git pull")
     os.chdir(dir)
 
 token = ""
