@@ -35,13 +35,14 @@ async def on_message(message):
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
                 return
-        await message.channel.send("Could not find card")
+        await message.channel.send("Could not find card.")
     await client.process_commands(message)
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def update(ctx):
     clone()
+    await ctx.send("Updated.")
 
 def clone():
     dir = os.getcwd()
