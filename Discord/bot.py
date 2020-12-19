@@ -50,6 +50,7 @@ def clone():
     os.system("git pull")
     os.chdir(dir)
 
+
 token = ""
 with open('config.json', 'r') as file:
     data = file.read()
