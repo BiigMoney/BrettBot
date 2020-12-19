@@ -20,7 +20,7 @@ async def on_message(message):
         for c in cards:
             title = c.find('name').text
             if cardname.lower() in title.lower():
-                cardfile = "CUSTOM/"
+                cardfile = "Brett stuff/TumbledMTG/data/pics/CUSTOM/"
                 cardfile += title
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
@@ -32,5 +32,5 @@ with open('config.json', 'r') as file:
     data = file.read()
     file_dict = json.loads(data)
     token = file_dict["token"]
-dom = ElementTree.parse("tumbled-mtg-cards.xml")
+dom = ElementTree.parse("Brett stuff/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
 client.run(token)
