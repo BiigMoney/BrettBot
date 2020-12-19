@@ -46,7 +46,7 @@ async def update(ctx):
 
 def clone():
     dir = os.getcwd()
-    files = glob.glob('Brett stuff')
+    files = glob.glob('Brett stuff/*')
     for f in files:
         os.remove(f)
     os.chdir('Brett stuff')
