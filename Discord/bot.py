@@ -4,10 +4,19 @@ import os
 from xml.etree import ElementTree
 import json
 
-client = commands.Bot(command_prefix = '!', case_insensitive=True)
+client = commands.Bot(command_prefix = '-', case_insensitive=True)
+
+@tasks.loop(minutes=1440.0)
+async def called_once_a_min():
+    clone()
+
+@called_once_a_min.before_loop
+async def before():
+    await client.wait_until_ready()
 
 @client.event
 async def on_ready():
+    called_once_a_min.start()
     print('Bot is ready.')
 
 
@@ -26,6 +35,18 @@ async def on_message(message):
                 await message.channel.send(file=discord.File(cardfile))
                 return
         await message.channel.send("Could not find card")
+    await client.process_commands(message)
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def update(ctx):
+    clone()
+
+def clone():
+    dir = os.getcwd()
+    os.chdir('Brett stuff')
+    os.system("git clone https://github.com/Tumbles/TumbledMTG-Cockatrice.git")
+    os.chdir(dir)
 
 token = ""
 with open('config.json', 'r') as file:
