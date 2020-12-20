@@ -24,6 +24,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content.startswith('==') and message.content.endswith('=='):
+        dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
         cardname = message.content[2:-2]
         cards = dom.find('cards')
         cards = cards.findall('card')
@@ -56,5 +57,4 @@ with open('config.json', 'r') as file:
     data = file.read()
     file_dict = json.loads(data)
     token = file_dict["token"]
-dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
 client.run(token)
