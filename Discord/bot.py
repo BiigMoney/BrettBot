@@ -35,15 +35,18 @@ async def on_message(message):
         cardname = x[2:-2]
         cards = dom.find('cards')
         cards = cards.findall('card')
+        lol = false
         for c in cards:
             title = c.find('name').text
             if cardname.lower() in title.lower():
+                lol = true
                 cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
                 cardfile += title
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
                 break
-        await message.channel.send("Could not find card.")
+        if lol == false:
+            await message.channel.send("Could not find card.")
     await client.process_commands(message)
 
 @client.command()
