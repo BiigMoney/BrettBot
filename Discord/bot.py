@@ -4,6 +4,7 @@ import os
 from xml.etree import ElementTree
 import json
 import glob
+import re
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
 
