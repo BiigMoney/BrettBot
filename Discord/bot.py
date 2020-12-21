@@ -23,9 +23,15 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content.startswith('==') and message.content.endswith('=='):
+    matches = re.findall('{{.*?}}',message.content)
+    if len(matches) == 0:
+        return
+    if len(matches) >= 10:
+        await message.channel.send("Relax.")
+        return
+    for x in matches:
         dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
-        cardname = message.content[2:-2]
+        cardname = x[2:-2]
         cards = dom.find('cards')
         cards = cards.findall('card')
         for c in cards:
@@ -35,7 +41,7 @@ async def on_message(message):
                 cardfile += title
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
-                return
+                break
         await message.channel.send("Could not find card.")
     await client.process_commands(message)
 
