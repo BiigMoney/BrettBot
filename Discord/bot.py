@@ -24,7 +24,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    matches = re.findall('((.*?))',message.content)
+    matches = re.findall('\(\(.*?\)\)',message.content)
     if len(matches) == 0:
         return
     if len(matches) >= 10:
