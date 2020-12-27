@@ -125,7 +125,7 @@ async def on_message(message):
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
-            await message.channel.send("Could not find cards for search " + x)
+            await message.channel.send("Could not find cards for search " + x + " founds " + founds)
     await client.process_commands(message)
 
 @client.command()
