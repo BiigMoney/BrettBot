@@ -30,11 +30,6 @@ async def on_message(message):
     if message.author == client.user:
         return
     matches = re.findall('{\(.*?\)\}',message.content)
-    dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
-    cards = dom.find('cards')
-    cards = cards.findall('card')
-    if len(matches) == 0:
-        return
     if len(matches) >= 10:
         await message.channel.send("Relax.")
         return
@@ -156,8 +151,14 @@ def clone():
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
     os.system("git pull")
     os.chdir(dir)
+    global dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+    global cards = dom.find('cards')
+    global cards = cards.findall('card')
 
 
+global dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+global cards = dom.find('cards')
+global cards = cards.findall('card')
 token = ""
 with open('config.json', 'r') as file:
     data = file.read()
