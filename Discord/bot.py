@@ -130,7 +130,7 @@ async def on_message(message):
             count+=1
             if count == 20:
                 await message.channel.send(founds)
-                continue
+                break
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
