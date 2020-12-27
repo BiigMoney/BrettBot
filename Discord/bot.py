@@ -122,7 +122,7 @@ async def on_message(message):
         else:
             await message.channel.send("Could not find cards for search " + x)
     matches = re.findall('\(\(.*?\)\)', message.content)
-    if matches > 5:
+    if len(matches) > 5:
         await message.channel.send("Relax.")
         return
     for x in matches:
