@@ -39,6 +39,7 @@ async def on_message(message):
         await message.channel.send("Relax.")
         return
     for x in matches:
+        count = 0
         founds = ""
         cardname = x[2:-2]
         words = cardname.split()
@@ -126,6 +127,10 @@ async def on_message(message):
                 print(lol)
                 continue
             founds += c.find('name').text + "\n"
+            count+=1
+            if count == 20:
+                await message.channel.send(founds)
+                continue
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
