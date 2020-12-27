@@ -63,7 +63,7 @@ async def on_message(message):
                 if word.lower() not in title.lower():
                     lol = False
             if not lol:
-                print("not lol here " + str(lol) + " searchwords " + str(searchwords) + " " + title.lower())
+                print("not lol here " + str(lol) + " searchwords " + str(len(searchwords)) + " " + title.lower())
                 continue
             for i in range(keywords.length):
                 print("entering keyword loop")
