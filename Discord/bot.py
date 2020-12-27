@@ -61,7 +61,6 @@ async def on_message(message):
             title = c.find('name').text
             for word in searchwords:
                 if not word.lower() in title.lower():
-                    print("word.lower() " + word.lower() + " not in title.lower() " + title.lower())
                     lol = False
             if not lol:
                 continue
