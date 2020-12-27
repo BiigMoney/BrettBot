@@ -60,7 +60,7 @@ async def on_message(message):
         for c in cards:
             title = c.find('name').text
             for word in searchwords:
-                if not word.lower() in title.lower():
+                if word.lower() not in title.lower():
                     lol = False
             if not lol:
                 print("not lol here " + str(lol) + " searchwords " + str(searchwords) + " " + title.lower())
