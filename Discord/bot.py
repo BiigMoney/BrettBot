@@ -64,65 +64,59 @@ async def on_message(message):
                 if word.lower() not in title.lower():
                     lol = False
             if not lol:
-                print("not lol here " + str(lol) + " searchwords " + str(len(searchwords)) + " " + title.lower())
                 continue
             for i in range(len(keywords)):
                 print("entering keyword loop")
                 if keywords[i] in valueKeyWords:
                     if values[i][0] == ">":
                         if not (c.find(keywords[i]).text > values[i][1:]):
-                            print("keyword in valueKeyWords values[i][0] == " + values[i] + " not greater than " + c.find(keywords[i]).text)
                             lol = False
                             break
                     elif values[i][0] == "=":
                         if not (c.find(keywords[i]).text == values[i][1:]):
-                            print("keyword in valueKeyWords values[i][0] == " + values[
-                                i] + " not equal to " + c.find(keywords[i]).text)
                             lol = False
                             break
                     elif values[i][0] == "<":
                         if not (c.find(keywords[i]).text < values[i][1:]):
-                            print("keyword in valueKeyWords values[i][0] == " + values[
-                                i] + " not less than " + c.find(keywords[i]).text)
                             lol = False
                             break
                     else:
                         if values[i].isnumeric():
                             if not (c.find(keywords[i]).text == values[i]):
-                                print("keyword in valueKeyWords values[i][0] == " + values[
-                                    i] + " not equal to " + c.find(keywords[i]).text)
                                 lol = False
                                 break
                         else:
-                            print("keyword in valueKeyWords values[i][0] == " + values[
-                                i] + " not valid or numeric")
                             lol = False
                             break
                 else:
-                    if keywords[i] == "c":
-                        colors = c.find('color').text.lower()
-                        for letter in values[i].lower():
-                            if not letter in colors:
+                    try:
+                        if keywords[i] == "c":
+                            colors = c.find('color').text.lower()
+                            for letter in values[i].lower():
+                                if not letter in colors:
+                                    lol = False
+                                    break
+                            if not lol:
+                                break
+                        elif keywords[i] == "o":
+                            text = c.find('text').text.lower()
+                            if not values[i].lower() in text:
                                 lol = False
                                 break
-                        if not lol:
-                            print("breaking here for some reason")
-                            break
-                    elif keywords[i] == "o":
-                        text = c.find('text').text.lower()
-                        if not values[i].lower() in text:
-                            lol = False
-                            break
-                    elif keywords[i] == "-o":
-                        text = c.find('text').text.lower()
-                        if values[i].lower() in text:
-                            lol = False
-                            break
-                    elif keywords[i] == "t":
-                        type = c.find('type').text.lower()
-                        if not values[i].lower() in type:
-                            lol = False
-                            break
+                        elif keywords[i] == "-o":
+                            text = c.find('text').text.lower()
+                            if values[i].lower() in text:
+                                lol = False
+                                break
+                        elif keywords[i] == "t":
+                            type = c.find('type').text.lower()
+                            if not values[i].lower() in type:
+                                lol = False
+                                break
+                    except:
+                        print("no type")
+                        break
+
             if not lol:
                 print(lol)
                 continue
