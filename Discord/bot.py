@@ -127,7 +127,21 @@ async def on_message(message):
             await message.channel.send(founds)
         else:
             await message.channel.send("Could not find cards for search " + x)
-
+    matches = re.findall('\(\(.*?\)\)', message.content)
+    for x in matches:
+        lol = False
+        cardname = x[2:-2]
+        for c in cards:
+            if cardname.lower() in c.find('name').text.lower():
+                lol = True
+                cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
+                cardfile += c.find('name').text.lower()
+                cardfile += ".jpg"
+                await message.channel.send(file=discord.File(cardfile))
+                break
+            if lol == False:
+                await
+                message.channel.send("Could not find card " + x)
     await client.process_commands(message)
 
 @client.command()
