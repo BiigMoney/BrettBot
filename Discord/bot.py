@@ -120,7 +120,8 @@ async def on_message(message):
                             lol = False
                             break
             if not lol:
-                 continue
+                print(lol)
+                continue
             founds += c.find('name').text + "\n"
         if len(founds) > 0:
             await message.channel.send(founds)
