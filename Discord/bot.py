@@ -27,6 +27,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.author == client.user:
+        return
     matches = re.findall('\(\(.*?\)\)',message.content)
     dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
     cards = dom.find('cards')
@@ -59,6 +61,7 @@ async def on_message(message):
             title = c.find('name').text
             for word in searchwords:
                 if not word.lower() in title.lower():
+                    print("word.lower() " + word.lower() + " not in title.lower() " + title.lower())
                     lol = False
             if not lol:
                 continue
@@ -66,22 +69,31 @@ async def on_message(message):
                 if keywords[i] in valueKeyWords:
                     if values[i][0] == ">":
                         if not (c.find(keywords[i]).text > values[i][1:]):
+                            print("keyword in valueKeyWords values[i][0] == " + values[i] + " not greater than " + c.find(keywords[i]).text)
                             lol = False
                             break
                     elif values[i][0] == "=":
                         if not (c.find(keywords[i]).text == values[i][1:]):
+                            print("keyword in valueKeyWords values[i][0] == " + values[
+                                i] + " not equal to " + c.find(keywords[i]).text)
                             lol = False
                             break
                     elif values[i][0] == "<":
                         if not (c.find(keywords[i]).text < values[i][1:]):
+                            print("keyword in valueKeyWords values[i][0] == " + values[
+                                i] + " not less than " + c.find(keywords[i]).text)
                             lol = False
                             break
                     else:
                         if values[i].isnumeric():
-                            if not (c.find(keywords[i]).text == values[i][1:]):
+                            if not (c.find(keywords[i]).text == values[i]):
+                                print("keyword in valueKeyWords values[i][0] == " + values[
+                                    i] + " not equal to " + c.find(keywords[i]).text)
                                 lol = False
                                 break
                         else:
+                            print("keyword in valueKeyWords values[i][0] == " + values[
+                                i] + " not valid or numeric")
                             lol = False
                             break
                 else:
