@@ -136,8 +136,8 @@ async def on_message(message):
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
                 break
-            if lol == False:
-                await message.channel.send("Could not find card " + x)
+        if lol == False:
+            await message.channel.send("Could not find card " + x)
     await client.process_commands(message)
 
 @client.command()
