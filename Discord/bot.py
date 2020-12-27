@@ -66,7 +66,6 @@ async def on_message(message):
             if not lol:
                 continue
             for i in range(len(keywords)):
-                print("entering keyword loop")
                 if keywords[i] in valueKeyWords:
                     if values[i][0] == ">":
                         if not (c.find(keywords[i]).text > values[i][1:]):
@@ -115,6 +114,7 @@ async def on_message(message):
                                 break
                     except:
                         print("no type")
+                        lol = False
                         break
 
             if not lol:
