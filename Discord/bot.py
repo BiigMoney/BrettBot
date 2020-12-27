@@ -129,7 +129,6 @@ async def on_message(message):
             founds += c.find('name').text + "\n"
             count+=1
             if count == 20:
-                await message.channel.send(founds)
                 break
         if len(founds) > 0:
             await message.channel.send(founds)
