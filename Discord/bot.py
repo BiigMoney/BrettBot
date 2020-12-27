@@ -29,7 +29,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    matches = re.findall('\(\(.*?\)\)',message.content)
+    matches = re.findall('{\(.*?\)\}',message.content)
     dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
     cards = dom.find('cards')
     cards = cards.findall('card')
@@ -113,7 +113,6 @@ async def on_message(message):
                                 lol = False
                                 break
                     except:
-                        print("no type")
                         lol = False
                         break
 
@@ -127,7 +126,8 @@ async def on_message(message):
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
-            await message.channel.send("Could not find cards for search " + x + " founds " + founds)
+            await message.channel.send("Could not find cards for search " + x)
+
     await client.process_commands(message)
 
 @client.command()
