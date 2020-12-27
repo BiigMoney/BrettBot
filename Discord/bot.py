@@ -7,6 +7,9 @@ import glob
 import re
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
+validKeyWords=["cmc","o","t","c","-o"]
+valueKeyWords = ["cmc"]
+
 
 @tasks.loop(minutes=1440.0)
 async def called_once_a_min():
@@ -25,28 +28,93 @@ async def on_ready():
 @client.event
 async def on_message(message):
     matches = re.findall('\(\(.*?\)\)',message.content)
+    dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+    cards = dom.find('cards')
+    cards = cards.findall('card')
     if len(matches) == 0:
         return
     if len(matches) >= 10:
         await message.channel.send("Relax.")
         return
     for x in matches:
-        dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+        founds = ""
         cardname = x[2:-2]
-        cards = dom.find('cards')
-        cards = cards.findall('card')
-        lol = False
+        words = cardname.split()
+        keywords = []
+        values = []
+        searchwords = []
+        for word in words:
+            if not ":" in word:
+                searchwords.append(word)
+            else:
+                halfs = word.split(":")
+                keywords.append(halfs[0])
+                values.append(halfs[1])
+        for keyword in keywords:
+            if not keyword in validKeyWords:
+                del values[keywords.index(keyword)]
+                keywords.remove(keyword)
+        lol = True
         for c in cards:
             title = c.find('name').text
-            if cardname.lower() in title.lower():
-                lol = True
-                cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
-                cardfile += title
-                cardfile += ".jpg"
-                await message.channel.send(file=discord.File(cardfile))
-                break
-        if lol == False:
-            await message.channel.send("Could not find card.")
+            for word in searchwords:
+                if not word.lower() in title.lower():
+                    lol = False
+            if not lol:
+                continue
+            for i in range(keywords.length):
+                if keywords[i] in valueKeyWords:
+                    if values[i][0] == ">":
+                        if not (c.find(keywords[i]).text > values[i][1:]):
+                            lol = False
+                            break
+                    elif values[i][0] == "=":
+                        if not (c.find(keywords[i]).text == values[i][1:]):
+                            lol = False
+                            break
+                    elif values[i][0] == "<":
+                        if not (c.find(keywords[i]).text < values[i][1:]):
+                            lol = False
+                            break
+                    else:
+                        if values[i].isnumeric():
+                            if not (c.find(keywords[i]).text == values[i][1:]):
+                                lol = False
+                                break
+                        else:
+                            lol = False
+                            break
+                else:
+                    if keywords[i] == "c":
+                        colors = c.find('color').text.lower()
+                        for letter in values[i].lower():
+                            if not letter in colors:
+                                lol = False
+                                break
+                        if not lol:
+                            break
+                    elif keywords[i] == "o":
+                        text = c.find('text').text.lower()
+                        if not values[i].lower() in text:
+                            lol = False
+                            break
+                    elif keywords[i] == "-o":
+                        text = c.find('text').text.lower()
+                        if values[i].lower() in text:
+                            lol = False
+                            break
+                    elif keywords[i] == "t":
+                        type = c.find('type').text.lower()
+                        if not values[i].lower() in type:
+                            lol = False
+                            break
+            if not lol:
+                 continue
+            founds += c.find('name').text + "\n"
+        if founds.length > 0:
+            await message.channel.send(founds)
+        else:
+            await message.channel.send("Could not find cards for search " + x)
     await client.process_commands(message)
 
 @client.command()
