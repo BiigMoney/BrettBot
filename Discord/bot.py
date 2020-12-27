@@ -65,7 +65,7 @@ async def on_message(message):
             if not lol:
                 print("not lol here " + str(lol) + " searchwords " + str(len(searchwords)) + " " + title.lower())
                 continue
-            for i in range(keywords.length):
+            for i in range(len(keywords)):
                 print("entering keyword loop")
                 if keywords[i] in valueKeyWords:
                     if values[i][0] == ">":
