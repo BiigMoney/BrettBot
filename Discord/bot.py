@@ -56,8 +56,8 @@ async def on_message(message):
             if not keyword in validKeyWords:
                 del values[keywords.index(keyword)]
                 keywords.remove(keyword)
-        lol = True
         for c in cards:
+            lol = True
             title = c.find('name').text
             for word in searchwords:
                 if word.lower() not in title.lower():
