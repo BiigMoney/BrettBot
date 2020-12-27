@@ -111,7 +111,7 @@ async def on_message(message):
             if not lol:
                  continue
             founds += c.find('name').text + "\n"
-        if founds.length > 0:
+        if len(founds) > 0:
             await message.channel.send(founds)
         else:
             await message.channel.send("Could not find cards for search " + x)
