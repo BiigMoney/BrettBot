@@ -7,7 +7,7 @@ import glob
 import re
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
-validKeyWords=["cmc","o","t","c","-o"]
+validKeyWords=["cmc","o","t","c","-o","power","toughness"]
 valueKeyWords = ["cmc"]
 
 
@@ -107,6 +107,53 @@ async def on_message(message):
                             if not values[i].lower() in type:
                                 lol = False
                                 break
+                        elif keywords[i] == "power":
+                            power = c.find('pt').text
+                            power = power[0]
+                            if values[i][0] == ">":
+                                if not (power > values[i][1:]):
+                                    lol = False
+                                    break
+                            elif values[i][0] == "=":
+                                if not (power == values[i][1:]):
+                                    lol = False
+                                    break
+                            elif values[i][0] == "<":
+                                if not (power < values[i][1:]):
+                                    lol = False
+                                    break
+                            else:
+                                if values[i].isnumeric():
+                                    if not (power == values[i]):
+                                        lol = False
+                                        break
+                                else:
+                                    lol = False
+                                    break
+                        elif keywords[i] == "toughness":
+                            toughness = c.find('pt').text
+                            toughness = toughness[2]
+                            if values[i][0] == ">":
+                                if not (toughness > values[i][1:]):
+                                    lol = False
+                                    break
+                            elif values[i][0] == "=":
+                                if not (toughness == values[i][1:]):
+                                    lol = False
+                                    break
+                            elif values[i][0] == "<":
+                                if not (toughness < values[i][1:]):
+                                    lol = False
+                                    break
+                            else:
+                                if values[i].isnumeric():
+                                    if not (toughness == values[i]):
+                                        lol = False
+                                        break
+                                else:
+                                    lol = False
+                                    break
+
                     except:
                         lol = False
                         break
