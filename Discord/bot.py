@@ -122,14 +122,14 @@ async def on_message(message):
         else:
             await message.channel.send("Could not find cards for search " + x)
     matches = re.findall('\(\(.*?\)\)', message.content)
-    print(matches)
+    if matches > 5:
+        await message.channel.send("Relax.")
+        return
     for x in matches:
         lol = False
         cardname = x[2:-2]
-        print(cardname)
         for c in cards:
             if cardname.lower() in c.find('name').text.lower():
-                print("found match")
                 lol = True
                 cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
                 cardfile += c.find('name').text
