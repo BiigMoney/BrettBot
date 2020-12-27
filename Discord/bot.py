@@ -117,7 +117,6 @@ async def on_message(message):
                         break
 
             if not lol:
-                print(lol)
                 continue
             founds += c.find('name').text + "\n"
             count+=1
@@ -140,8 +139,7 @@ async def on_message(message):
                 await message.channel.send(file=discord.File(cardfile))
                 break
             if lol == False:
-                await
-                message.channel.send("Could not find card " + x)
+                await message.channel.send("Could not find card " + x)
     await client.process_commands(message)
 
 @client.command()
