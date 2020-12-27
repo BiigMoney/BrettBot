@@ -151,14 +151,13 @@ def clone():
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
     os.system("git pull")
     os.chdir(dir)
-    global dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
-    global cards = dom.find('cards')
-    global cards = cards.findall('card')
+    global dom
+    dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+    global cards
+    cards = dom.find('cards')
+    cards = cards.findall('card')
 
 
-global dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
-global cards = dom.find('cards')
-global cards = cards.findall('card')
 token = ""
 with open('config.json', 'r') as file:
     data = file.read()
