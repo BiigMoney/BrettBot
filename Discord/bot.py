@@ -134,7 +134,7 @@ async def on_message(message):
             if cardname.lower() in c.find('name').text.lower():
                 lol = True
                 cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
-                cardfile += c.find('name').text.lower()
+                cardfile += c.find('name').text
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
                 break
