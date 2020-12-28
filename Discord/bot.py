@@ -7,7 +7,7 @@ import glob
 import re
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
-validKeyWords=["cmc","o","t","c","-o","power","toughness"]
+validKeyWords=["cmc","o","t","c","-o","power","toughness","type","p","-c","-t","-type"]
 valueKeyWords = ["cmc"]
 
 
@@ -50,6 +50,7 @@ async def on_message(message):
                 values.append(halfs[1])
         for keyword in keywords:
             if not keyword in validKeyWords:
+                founds+=keyword+" is not a valid keywords, type -keywords for a list of valid keywords"
                 del values[keywords.index(keyword)]
                 keywords.remove(keyword)
         for c in cards:
@@ -84,7 +85,15 @@ async def on_message(message):
                             break
                 else:
                     try:
-                        if keywords[i] == "c":
+                        if keywords[i] == "-c":
+                            colors = c.find('color').text.lower()
+                            for letter in values[i].lower():
+                                if letter in colors:
+                                    lol = False
+                                    break
+                            if not lol:
+                                break
+                        elif keywords[i] == "c":
                             colors = c.find('color').text.lower()
                             for letter in values[i].lower():
                                 if not letter in colors:
@@ -102,12 +111,17 @@ async def on_message(message):
                             if values[i].lower() in text:
                                 lol = False
                                 break
-                        elif keywords[i] == "t":
+                        elif keywords[i] == "t" or keywords[i] == "type":
                             type = c.find('type').text.lower()
                             if not values[i].lower() in type:
                                 lol = False
                                 break
-                        elif keywords[i] == "power":
+                        elif keywords[i] == "-t" or keywords[i] == "-type":
+                            type = c.find('type').text.lower()
+                            if values[i].lower() in type:
+                                lol = False
+                                break
+                        elif keywords[i] == "power" or keywords[i] == "p":
                             power = c.find('pt').text
                             power = power[0]
                             if values[i][0] == ">":
@@ -167,7 +181,7 @@ async def on_message(message):
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
-            await message.channel.send("Could not find cards for search " + x)
+            await message.channel.send("Could not find cards for search " + x +", make sure you remembered all of your colons!")
     matches = re.findall('\(\(.*?\)\)', message.content)
     if len(matches) > 5:
         await message.channel.send("Relax.")
