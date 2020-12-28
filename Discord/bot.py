@@ -220,6 +220,10 @@ def clone():
     cards = cards.findall('card')
 
 
+@client.command()
+async def keywords(ctx):
+    await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\np:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite")
+
 token = ""
 with open('config.json', 'r') as file:
     data = file.read()
