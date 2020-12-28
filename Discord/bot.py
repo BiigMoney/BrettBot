@@ -53,7 +53,7 @@ async def on_message(message):
                 founds+=keyword+" is not a valid keywords, type -keywords for a list of valid keywords\n"
                 del values[keywords.index(keyword)]
                 keywords.remove(keyword)
-        if len(keywords) > 0:
+        if len(keywords) > 0 or len(searchwords) > 0:
             for c in cards:
                 lol = True
                 title = c.find('name').text
@@ -222,7 +222,7 @@ def clone():
 
 @client.command()
 async def keywords(ctx):
-    await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\np:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite")
+    await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\np:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
 
 token = ""
 with open('config.json', 'r') as file:
