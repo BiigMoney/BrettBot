@@ -50,134 +50,135 @@ async def on_message(message):
                 values.append(halfs[1])
         for keyword in keywords:
             if not keyword in validKeyWords:
-                founds+=keyword+" is not a valid keywords, type -keywords for a list of valid keywords"
+                founds+=keyword+" is not a valid keywords, type -keywords for a list of valid keywords\n"
                 del values[keywords.index(keyword)]
                 keywords.remove(keyword)
-        for c in cards:
-            lol = True
-            title = c.find('name').text
-            for word in searchwords:
-                if word.lower() not in title.lower():
-                    lol = False
-            if not lol:
-                continue
-            for i in range(len(keywords)):
-                if keywords[i] in valueKeyWords:
-                    if values[i][0] == ">":
-                        if not (c.find(keywords[i]).text > values[i][1:]):
-                            lol = False
-                            break
-                    elif values[i][0] == "=":
-                        if not (c.find(keywords[i]).text == values[i][1:]):
-                            lol = False
-                            break
-                    elif values[i][0] == "<":
-                        if not (c.find(keywords[i]).text < values[i][1:]):
-                            lol = False
-                            break
-                    else:
-                        if values[i].isnumeric():
-                            if not (c.find(keywords[i]).text == values[i]):
+        if len(keywords) > 0:
+            for c in cards:
+                lol = True
+                title = c.find('name').text
+                for word in searchwords:
+                    if word.lower() not in title.lower():
+                        lol = False
+                if not lol:
+                    continue
+                for i in range(len(keywords)):
+                    if keywords[i] in valueKeyWords:
+                        if values[i][0] == ">":
+                            if not (c.find(keywords[i]).text > values[i][1:]):
+                                lol = False
+                                break
+                        elif values[i][0] == "=":
+                            if not (c.find(keywords[i]).text == values[i][1:]):
+                                lol = False
+                                break
+                        elif values[i][0] == "<":
+                            if not (c.find(keywords[i]).text < values[i][1:]):
                                 lol = False
                                 break
                         else:
+                            if values[i].isnumeric():
+                                if not (c.find(keywords[i]).text == values[i]):
+                                    lol = False
+                                    break
+                            else:
+                                lol = False
+                                break
+                    else:
+                        try:
+                            if keywords[i] == "-c":
+                                colors = c.find('color').text.lower()
+                                for letter in values[i].lower():
+                                    if letter in colors:
+                                        lol = False
+                                        break
+                                if not lol:
+                                    break
+                            elif keywords[i] == "c":
+                                colors = c.find('color').text.lower()
+                                for letter in values[i].lower():
+                                    if not letter in colors:
+                                        lol = False
+                                        break
+                                if not lol:
+                                    break
+                            elif keywords[i] == "o":
+                                text = c.find('text').text.lower()
+                                if not values[i].lower() in text:
+                                    lol = False
+                                    break
+                            elif keywords[i] == "-o":
+                                text = c.find('text').text.lower()
+                                if values[i].lower() in text:
+                                    lol = False
+                                    break
+                            elif keywords[i] == "t" or keywords[i] == "type":
+                                type = c.find('type').text.lower()
+                                if not values[i].lower() in type:
+                                    lol = False
+                                    break
+                            elif keywords[i] == "-t" or keywords[i] == "-type":
+                                type = c.find('type').text.lower()
+                                if values[i].lower() in type:
+                                    lol = False
+                                    break
+                            elif keywords[i] == "power" or keywords[i] == "p":
+                                power = c.find('pt').text
+                                power = power[0]
+                                if values[i][0] == ">":
+                                    if not (power > values[i][1:]):
+                                        lol = False
+                                        break
+                                elif values[i][0] == "=":
+                                    if not (power == values[i][1:]):
+                                        lol = False
+                                        break
+                                elif values[i][0] == "<":
+                                    if not (power < values[i][1:]):
+                                        lol = False
+                                        break
+                                else:
+                                    if values[i].isnumeric():
+                                        if not (power == values[i]):
+                                            lol = False
+                                            break
+                                    else:
+                                        lol = False
+                                        break
+                            elif keywords[i] == "toughness":
+                                toughness = c.find('pt').text
+                                toughness = toughness[2]
+                                if values[i][0] == ">":
+                                    if not (toughness > values[i][1:]):
+                                        lol = False
+                                        break
+                                elif values[i][0] == "=":
+                                    if not (toughness == values[i][1:]):
+                                        lol = False
+                                        break
+                                elif values[i][0] == "<":
+                                    if not (toughness < values[i][1:]):
+                                        lol = False
+                                        break
+                                else:
+                                    if values[i].isnumeric():
+                                        if not (toughness == values[i]):
+                                            lol = False
+                                            break
+                                    else:
+                                        lol = False
+                                        break
+
+                        except:
                             lol = False
                             break
-                else:
-                    try:
-                        if keywords[i] == "-c":
-                            colors = c.find('color').text.lower()
-                            for letter in values[i].lower():
-                                if letter in colors:
-                                    lol = False
-                                    break
-                            if not lol:
-                                break
-                        elif keywords[i] == "c":
-                            colors = c.find('color').text.lower()
-                            for letter in values[i].lower():
-                                if not letter in colors:
-                                    lol = False
-                                    break
-                            if not lol:
-                                break
-                        elif keywords[i] == "o":
-                            text = c.find('text').text.lower()
-                            if not values[i].lower() in text:
-                                lol = False
-                                break
-                        elif keywords[i] == "-o":
-                            text = c.find('text').text.lower()
-                            if values[i].lower() in text:
-                                lol = False
-                                break
-                        elif keywords[i] == "t" or keywords[i] == "type":
-                            type = c.find('type').text.lower()
-                            if not values[i].lower() in type:
-                                lol = False
-                                break
-                        elif keywords[i] == "-t" or keywords[i] == "-type":
-                            type = c.find('type').text.lower()
-                            if values[i].lower() in type:
-                                lol = False
-                                break
-                        elif keywords[i] == "power" or keywords[i] == "p":
-                            power = c.find('pt').text
-                            power = power[0]
-                            if values[i][0] == ">":
-                                if not (power > values[i][1:]):
-                                    lol = False
-                                    break
-                            elif values[i][0] == "=":
-                                if not (power == values[i][1:]):
-                                    lol = False
-                                    break
-                            elif values[i][0] == "<":
-                                if not (power < values[i][1:]):
-                                    lol = False
-                                    break
-                            else:
-                                if values[i].isnumeric():
-                                    if not (power == values[i]):
-                                        lol = False
-                                        break
-                                else:
-                                    lol = False
-                                    break
-                        elif keywords[i] == "toughness":
-                            toughness = c.find('pt').text
-                            toughness = toughness[2]
-                            if values[i][0] == ">":
-                                if not (toughness > values[i][1:]):
-                                    lol = False
-                                    break
-                            elif values[i][0] == "=":
-                                if not (toughness == values[i][1:]):
-                                    lol = False
-                                    break
-                            elif values[i][0] == "<":
-                                if not (toughness < values[i][1:]):
-                                    lol = False
-                                    break
-                            else:
-                                if values[i].isnumeric():
-                                    if not (toughness == values[i]):
-                                        lol = False
-                                        break
-                                else:
-                                    lol = False
-                                    break
 
-                    except:
-                        lol = False
-                        break
-
-            if not lol:
-                continue
-            founds += c.find('name').text + "\n"
-            count+=1
-            if count == 20:
-                break
+                if not lol:
+                    continue
+                founds += c.find('name').text + "\n"
+                count+=1
+                if count == 20:
+                    break
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
