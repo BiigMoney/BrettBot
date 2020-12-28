@@ -7,7 +7,7 @@ import glob
 import re
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
-validKeyWords=["cmc","o","t","c","-o","power","toughness","type","p","-c","-t","-type"]
+validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p"]
 valueKeyWords = ["cmc"]
 
 
@@ -222,7 +222,7 @@ def clone():
 
 @client.command()
 async def keywords(ctx):
-    await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\np:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
+    await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\npower:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
 
 token = ""
 with open('config.json', 'r') as file:
