@@ -50,7 +50,7 @@ async def on_message(message):
                 values.append(halfs[1])
         for keyword in keywords:
             if not keyword in validKeyWords:
-                founds+=keyword+" is not a valid keywords, type -keywords for a list of valid keywords\n"
+                founds+=keyword+" is not a valid keyword, type -keywords for a list of valid keywords\n"
                 del values[keywords.index(keyword)]
                 keywords.remove(keyword)
         if len(keywords) > 0 or len(searchwords) > 0:
@@ -178,6 +178,7 @@ async def on_message(message):
                 founds += c.find('name').text + "\n"
                 count+=1
                 if count == 20:
+                    founds+="And more!\n"
                     break
         if len(founds) > 0:
             await message.channel.send(founds)
