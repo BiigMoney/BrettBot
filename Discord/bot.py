@@ -228,7 +228,7 @@ async def createTournament(ctx):
 
 @client.command()
 async def test(ctx):
-    print(ctx.guild + " " + ctx.author)
+    print(str(ctx.guild) + " " + ctx.author)
 
 
 
