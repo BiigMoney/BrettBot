@@ -194,7 +194,7 @@ async def on_message(message):
         for c in cards:
             if cardname.lower() in c.find('name').text.lower():
                 lol = True
-                cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/pics/CUSTOM/"
+                cardfile = "../../Brett stuff/TumbledMTG-Cockatrice/data/pics/CUSTOM/"
                 cardfile += c.find('name').text
                 cardfile += ".jpg"
                 await message.channel.send(file=discord.File(cardfile))
@@ -215,7 +215,7 @@ def clone():
     os.system("git pull")
     os.chdir(dir)
     global dom
-    dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/TumbledMTG/data/customsets/tumbled-mtg-cards.xml")
+    dom = ElementTree.parse("../../Brett stuff/TumbledMTG-Cockatrice/data/customsets/tumbled-mtg-cards.xml")
     global cards
     cards = dom.find('cards')
     cards = cards.findall('card')
