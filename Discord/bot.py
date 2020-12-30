@@ -5,10 +5,12 @@ from xml.etree import ElementTree
 import json
 import glob
 import re
+from datetime import datetime
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
 validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p"]
 valueKeyWords = ["cmc"]
+currentTourney = None
 
 
 @tasks.loop(minutes=1440.0)
@@ -219,6 +221,15 @@ def clone():
     global cards
     cards = dom.find('cards')
     cards = cards.findall('card')
+
+@client.command()
+async def createTournament(ctx):
+    return
+
+@client.command()
+async def test(ctx):
+    print(ctx.guild + " " + ctx.author)
+
 
 
 @client.command()
