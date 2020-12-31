@@ -9,7 +9,7 @@ import re
 from datetime import datetime
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
-validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p"]
+validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p","is"]
 valueKeyWords = ["cmc"]
 currentTourney = None
 
