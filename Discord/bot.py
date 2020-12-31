@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import os
+from os import path
 from xml.etree import ElementTree
 import json
 import glob
@@ -23,6 +24,10 @@ async def before():
 
 @client.event
 async def on_ready():
+    if path.exists("tournament.json"):
+        with open('tournament.json', 'r') as file:
+            data = file.read()
+            currentTourney = json.loads(data)
     called_once_a_min.start()
     print('Bot is ready.')
 
@@ -170,7 +175,13 @@ async def on_message(message):
                                     else:
                                         lol = False
                                         break
-
+                            elif keywords[i] == "is":
+                                if values[i] == "new":
+                                    new = c.find('new').text
+                                    if not new == "TRUE":
+                                        lol = False
+                                else:
+                                    lol = False
                         except:
                             lol = False
                             break
@@ -223,12 +234,17 @@ def clone():
     cards = cards.findall('card')
 
 @client.command()
-async def createTournament(ctx):
-    return
+async def createTournament(ctx, ):
+    if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
+        if currentTourney == None:
+            return
+        else:
+            ctx.send("There is already a tournament active, please finish the current tournament before starting a new one.")
+
 
 @client.command()
 async def test(ctx):
-    print(str(ctx.guild) + " " + str(ctx.author))
+    return
 
 
 
