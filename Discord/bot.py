@@ -32,7 +32,8 @@ async def on_ready():
             currentTourney = json.loads(data)
             url = currentTourney['link'].rsplit('/', 1)[-1]
             global currentChallongeTourney
-            currentChallongeTourney = challonge.tournaments.show(url)
+            currentChallongeTourney = challonge.get_tournament(url)
+            print(str(currentChallongeTourney))
     called_once_a_min.start()
     print('Bot is ready.')
 
@@ -248,8 +249,23 @@ async def newtournament(ctx, arg):
         else:
             await ctx.send("Tournament already in progress")
 
+@client.command()
+async def register(ctx):
+    global currentTourney
+    global currentChallongeTourney
+    if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
+        if currentTourney != None:
 
 
+@client.command()
+async def deletetourney(ctx):
+    global currentTourney
+    if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
+        if currentTourney != None:
+            os.remove("tournament.json")
+            await ctx.send("No longer looking at active tourney")
+        else:
+            await ctx.send("There is no active tourney to delete")
 
 
 @client.command()
