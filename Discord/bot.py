@@ -32,7 +32,7 @@ async def on_ready():
             currentTourney = json.loads(data)
             url = currentTourney['link'].rsplit('/', 1)[-1]
             global currentChallongeTourney
-            currentChallongeTourney = challonge.get_tournament(url)
+            currentChallongeTourney = challonge.tournaments.show(url)
             print(str(currentChallongeTourney))
     called_once_a_min.start()
     print('Bot is ready.')
@@ -255,7 +255,10 @@ async def register(ctx):
     global currentChallongeTourney
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney != None:
-            return
+            challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
+            await ctx.send("Added you to the bracket!")
+        else:
+            await ctx.send("There is no tournament to register for!")
 
 
 @client.command()
