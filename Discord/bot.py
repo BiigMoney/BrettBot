@@ -272,5 +272,6 @@ with open('config.json', 'r') as file:
     data = file.read()
     file_dict = json.loads(data)
     token = file_dict["token"]
+    print(token)
 challonge.set_credentials("TumbledMTG", token)
 client.run(token)
