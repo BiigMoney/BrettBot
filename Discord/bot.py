@@ -243,6 +243,7 @@ def clone():
 
 @client.command()
 async def newtournament(ctx, arg):
+    global currentTourney
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney == None:
             currentTourney = Tournament(arg)
