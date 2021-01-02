@@ -254,11 +254,10 @@ async def register(ctx):
     global currentTourney
     global currentChallongeTourney
     if currentTourney != None:
-        try:
-            challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
-            await ctx.send("Added you to the bracket!")
-        except:
-            await ctx.send("There was an error, I think you have already been registered.")
+
+        challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
+        await ctx.send("Added you to the bracket!")
+
     else:
             await ctx.send("There is no tournament to register for!")
 
