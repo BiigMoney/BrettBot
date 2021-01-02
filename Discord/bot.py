@@ -265,8 +265,11 @@ async def register(ctx):
 @client.command()
 async def deletetourney(ctx):
     global currentTourney
+    global currentChallongeTourney
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney != None:
+            currentTourney = None
+            currentChallongeTourney = None
             os.remove("tournament.json")
             await ctx.send("No longer looking at active tourney")
         else:
