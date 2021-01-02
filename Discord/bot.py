@@ -25,6 +25,10 @@ async def before():
 
 @client.event
 async def on_ready():
+    global currentTourney
+    currentTourney = None
+    global currentChallongeTourney
+    currentChallongeTourney = None
     if path.exists("tournament.json"):
         with open('tournament.json', 'r') as file:
             data = file.read()
