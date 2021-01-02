@@ -268,10 +268,11 @@ class Tournament:
             json.dump({"link": link},file)
 
 token = ""
+apikey = ""
 with open('config.json', 'r') as file:
     data = file.read()
     file_dict = json.loads(data)
     token = file_dict["token"]
-    print(token)
-challonge.set_credentials("TumbledMTG", token)
+    apikey = file_dict["challongeAPIKey"]
+challonge.set_credentials("TumbledMTG", apikey)
 client.run(token)
