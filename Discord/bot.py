@@ -25,10 +25,6 @@ async def before():
 
 @client.event
 async def on_ready():
-    global currentTourney
-    currentTourney = None
-    global currentChallongeTourney
-    currentChallongeTourney = None
     if path.exists("tournament.json"):
         with open('tournament.json', 'r') as file:
             data = file.read()
@@ -231,6 +227,10 @@ async def update(ctx):
     await ctx.send("Updated.")
 
 def clone():
+    global currentTourney
+    currentTourney = None
+    global currentChallongeTourney
+    currentChallongeTourney = None
     dir = os.getcwd()
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
     os.system("git pull")
