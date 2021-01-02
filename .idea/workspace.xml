@@ -37,12 +37,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="5555" />
+          <entry key="py" value="5628" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5555" />
+          <entry key="Python" value="5628" />
         </counts>
       </usages-collector>
     </session>
@@ -64,13 +64,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="276" column="46" selection-start-line="276" selection-start-column="46" selection-end-line="276" selection-end-column="46" />
+            <state relative-caret-position="589">
+              <caret line="250" column="58" selection-start-line="250" selection-start-column="58" selection-end-line="250" selection-end-column="58" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1609629515557" expanded="true" signature="10774:10778" ph="..." />
-                <marker date="1609629515557" expanded="true" signature="10820:11299" ph="..." />
-                <marker date="1609629515557" expanded="true" signature="11148:11299" ph="..." />
+                <marker date="1609629874734" expanded="true" signature="10700:10704" ph="..." />
+                <marker date="1609629874734" expanded="true" signature="10746:11225" ph="..." />
+                <marker date="1609629874734" expanded="true" signature="11074:11225" ph="..." />
               </folding>
             </state>
           </provider>
@@ -258,7 +258,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Discord/bot.py</url>
-          <line>258</line>
+          <line>256</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -284,13 +284,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="276" column="46" selection-start-line="276" selection-start-column="46" selection-end-line="276" selection-end-column="46" />
+        <state relative-caret-position="589">
+          <caret line="250" column="58" selection-start-line="250" selection-start-column="58" selection-end-line="250" selection-end-column="58" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1609629515557" expanded="true" signature="10774:10778" ph="..." />
-            <marker date="1609629515557" expanded="true" signature="10820:11299" ph="..." />
-            <marker date="1609629515557" expanded="true" signature="11148:11299" ph="..." />
+            <marker date="1609629874734" expanded="true" signature="10700:10704" ph="..." />
+            <marker date="1609629874734" expanded="true" signature="10746:11225" ph="..." />
+            <marker date="1609629874734" expanded="true" signature="11074:11225" ph="..." />
           </folding>
         </state>
       </provider>

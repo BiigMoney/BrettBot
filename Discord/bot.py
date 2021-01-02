@@ -29,12 +29,8 @@ async def on_ready():
         with open('tournament.json', 'r') as file:
             data = file.read()
             currentTourney = json.loads(data)
-            print(str(currentTourney))
             url = currentTourney['link'].rsplit('/', 1)[-1]
-            print(url)
             currentChallongeTourney = challonge.tournaments.show(url)
-            print(str(currentTourney))
-            print(str(currentChallongeTourney))
     called_once_a_min.start()
     print('Bot is ready.')
 
@@ -251,6 +247,8 @@ async def newtournament(ctx, arg):
         if currentTourney == None:
             currentTourney = Tournament(arg)
             await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link)["name"])
+        else:
+            await ctx.send("Tournament already in progress")
 
 
 
