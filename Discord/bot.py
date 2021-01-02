@@ -255,6 +255,7 @@ async def register(ctx):
     global currentChallongeTourney
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney != None:
+            return
 
 
 @client.command()
