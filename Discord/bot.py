@@ -30,7 +30,9 @@ async def on_ready():
             data = file.read()
             currentTourney = json.loads(data)
             print(str(currentTourney))
-            currentChallongeTourney = challonge.tournaments.show(currentTourney['link'].rsplit('/', 1)[-1])
+            url = currentTourney['link'].rsplit('/', 1)[-1]
+            print(url)
+            currentChallongeTourney = challonge.tournaments.show(url)
             print(str(currentTourney))
             print(str(currentChallongeTourney))
     called_once_a_min.start()
