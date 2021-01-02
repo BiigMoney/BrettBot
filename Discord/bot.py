@@ -28,8 +28,10 @@ async def on_ready():
     if path.exists("tournament.json"):
         with open('tournament.json', 'r') as file:
             data = file.read()
+            global currentTourney
             currentTourney = json.loads(data)
             url = currentTourney['link'].rsplit('/', 1)[-1]
+            global currentChallongeTourney
             currentChallongeTourney = challonge.tournaments.show(url)
     called_once_a_min.start()
     print('Bot is ready.')
@@ -226,10 +228,6 @@ async def update(ctx):
     await ctx.send("Updated.")
 
 def clone():
-    global currentTourney
-    currentTourney = None
-    global currentChallongeTourney
-    currentChallongeTourney = None
     dir = os.getcwd()
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
     os.system("git pull")
@@ -246,7 +244,7 @@ async def newtournament(ctx, arg):
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney == None:
             currentTourney = Tournament(arg)
-            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link)["name"])
+            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link.rsplit('/', 1)[-1])["name"])
         else:
             await ctx.send("Tournament already in progress")
 
