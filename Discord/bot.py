@@ -247,7 +247,7 @@ async def newtournament(ctx, arg):
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney == None:
             currentTourney = Tournament(arg)
-            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney['link'])["name"])
+            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link)["name"])
 
 
 
