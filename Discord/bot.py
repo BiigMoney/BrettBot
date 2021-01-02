@@ -7,12 +7,13 @@ import json
 import glob
 import re
 from datetime import datetime
+import challonge
 
 client = commands.Bot(command_prefix = '-', case_insensitive=True)
 validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p","is"]
 valueKeyWords = ["cmc"]
 currentTourney = None
-
+currentChallongeTourney = None
 
 @tasks.loop(minutes=1440.0)
 async def called_once_a_min():
@@ -28,6 +29,9 @@ async def on_ready():
         with open('tournament.json', 'r') as file:
             data = file.read()
             currentTourney = json.loads(data)
+            currentChallongeTourney = challonge.tournaments.show(currentTourney['link'])
+            print(str(currentTourney))
+            print(str(currentChallongeTourney))
     called_once_a_min.start()
     print('Bot is ready.')
 
@@ -196,7 +200,7 @@ async def on_message(message):
         if len(founds) > 0:
             await message.channel.send(founds)
         else:
-            await message.channel.send("Could not find cards for search " + x +", make sure you remembered all of your colons!")
+            await message.channel.send("Could not find cards for search " + x[2:-2] +", note that most searches need a colon (ex. cmc:>3 rather than cmc>3)")
     matches = re.findall('\(\(.*?\)\)', message.content)
     if len(matches) > 5:
         await message.channel.send("Relax.")
@@ -234,17 +238,13 @@ def clone():
     cards = cards.findall('card')
 
 @client.command()
-async def createTournament(ctx, ):
-    if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
+async def newtournament(ctx, arg):
+    if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney == None:
-            return
-        else:
-            ctx.send("There is already a tournament active, please finish the current tournament before starting a new one.")
+            currentTourney = Tournament(arg)
+            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney['link'])["name"])
 
 
-@client.command()
-async def test(ctx):
-    return
 
 
 
@@ -252,9 +252,17 @@ async def test(ctx):
 async def keywords(ctx):
     await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\npower:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
 
+
+class Tournament:
+    def __init__(self, link):
+        self.link = link
+        with open('tournament.json', 'w') as file:
+            json.dump({"link": link},file)
+
 token = ""
 with open('config.json', 'r') as file:
     data = file.read()
     file_dict = json.loads(data)
     token = file_dict["token"]
+challonge.set_credentials("TumbledMTG", token)
 client.run(token)
