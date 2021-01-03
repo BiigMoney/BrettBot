@@ -258,10 +258,11 @@ async def register(ctx):
     global currentTourney
     global currentChallongeTourney
     if currentTourney != None:
-
-        challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
-        await ctx.send("Added you to the bracket!")
-
+        try:
+            challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
+            await ctx.send("Added you to the bracket!")
+        except:
+            await ctx.send("There was an error, I think you have already registered.")
     else:
             await ctx.send("There is no tournament to register for!")
 
@@ -284,7 +285,13 @@ async def deletetourney(ctx):
 async def keywords(ctx):
     await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\npower:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
 
-
+@client.command()
+async def getmatches(ctx):
+    global currentTourney
+    global currentChallongeTourney
+    if currentTourney != None:
+        matches = challonge.matches.index(currentChallongeTourney['id'])
+        print(str(matches))
 class Tournament:
     def __init__(self, link):
         self.link = link
