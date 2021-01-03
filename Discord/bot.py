@@ -28,7 +28,7 @@ async def called_once_a_min():
     global currentTourney
     global currentChallongeTourney
     if currentTourney != None:
-        matches = challonge.matches.index(currentChallongeTourney['id'],"open")
+        matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
             print(match)
 @called_once_a_min.before_loop
