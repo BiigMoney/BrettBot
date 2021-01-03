@@ -36,6 +36,7 @@ async def called_once_a_min():
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 channel = client.get_channel(630930138854326283)
                 guild = client.get_guild(455612893900308501)
+                print(str(guild))
                 player1 = guild.get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name']))
                 print(str(player1))
                 player2 = guild.get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name']))
