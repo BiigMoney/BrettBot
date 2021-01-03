@@ -34,7 +34,9 @@ async def called_once_a_min():
         for match in matches:
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
-                print("Marked as underway")
+                channel = client.get_channel(630930138854326283)
+                print(match["player1_id"])
+                print(match["player2_id"])
 @called_once_a_min.before_loop
 async def before():
     await client.wait_until_ready()
