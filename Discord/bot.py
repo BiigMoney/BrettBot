@@ -35,7 +35,7 @@ async def called_once_a_min():
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 channel = client.get_channel(630930138854326283)
-                await channel.send("@"+challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])+" @" +challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])+" , you two have a match")
+                await channel.send("@"+challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name']+" @" +challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name']+" , you two have a match")
 @called_once_a_min.before_loop
 async def before():
     await client.wait_until_ready()
