@@ -35,9 +35,9 @@ async def called_once_a_min():
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 channel = client.get_channel(630930138854326283)
-                player1 = client.get_guild(455612893900308501).get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name']))
+                player1 = client.get_guild(455612893900308501).get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'].split("#")[0]))
                 print(str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name']))
-                player2 = client.get_guild(455612893900308501).get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name']))
+                player2 = client.get_guild(455612893900308501).get_member_named(str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'].split("#")[0]))
                 print(str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name']))
                 await channel.send("@", {player1.mention}," @", {player2.mention}, " , you two have a match")
                 print("done")
