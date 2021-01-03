@@ -9,7 +9,10 @@ import re
 from datetime import datetime
 import challonge
 
-client = commands.Bot(command_prefix = '-', case_insensitive=True)
+intents = discord.Intents.default()
+intents.members = True
+
+client = commands.Bot(command_prefix = '-', case_insensitive=True, intents=intents)
 validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p","is"]
 valueKeyWords = ["cmc"]
 currentTourney = None
