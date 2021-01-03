@@ -26,7 +26,7 @@ async def called_once_a_day():
 async def before():
     await client.wait_until_ready()
 
-@tasks.loop(minutes=1.0)
+@tasks.loop(minutes=5.0)
 async def called_once_a_min():
     global currentTourney
     global currentChallongeTourney
