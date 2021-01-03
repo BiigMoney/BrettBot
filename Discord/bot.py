@@ -274,7 +274,7 @@ async def newtournament(ctx, arg):
         if currentTourney == None:
             try:
                 currentTourney = Tournament(arg)
-                url = currentTourney['link'].rsplit('/', 1)[-1]
+                url = currentTourney.link.rsplit('/', 1)[-1]
                 currentChallongeTourney = challonge.tournaments.show(url)
                 await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link.rsplit('/', 1)[-1])["name"])
             except Exception as e:
