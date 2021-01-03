@@ -39,7 +39,7 @@ async def called_once_a_min():
                 player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
                 player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
 
-                await channel.send(guild.members.get_member_named(player1).mention)
+                await channel.send(guild.get_member_named("Big Money").mention)
                 print("done")
 
 @called_once_a_min.before_loop
