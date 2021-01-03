@@ -27,6 +27,7 @@ async def before():
 async def called_once_a_min():
     global currentTourney
     global currentChallongeTourney
+    currentChallongeTourney = challonge.tournaments.show(url)
     if currentTourney != None:
         matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
