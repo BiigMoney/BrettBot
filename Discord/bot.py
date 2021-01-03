@@ -37,7 +37,9 @@ async def called_once_a_min():
                 channel = client.get_channel(630930138854326283)
                 guild = client.get_guild(455612893900308501)
                 player1 = guild.get_member_named(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
+                print(str(player1))
                 player2 = guild.get_member_named(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
+                print(str(player2))
                 await channel.send("@", {player1.mention}," @", {player2.mention}, " , you two have a match")
                 print("done")
 @called_once_a_min.before_loop
