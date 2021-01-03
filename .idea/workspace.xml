@@ -37,12 +37,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="7205" />
+          <entry key="py" value="7215" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="7205" />
+          <entry key="Python" value="7215" />
         </counts>
       </usages-collector>
     </session>
@@ -64,15 +64,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+            <state relative-caret-position="493">
+              <caret line="40" column="140" selection-start-line="40" selection-start-column="140" selection-end-line="40" selection-end-column="140" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1609636666573" expanded="true" signature="12609:13093" ph="..." />
-                <marker date="1609636666573" expanded="true" signature="12718:13093" ph="..." />
-                <marker date="1609636666573" expanded="true" signature="13135:13613" ph="..." />
-                <marker date="1609636666573" expanded="true" signature="13444:13445" ph="..." />
-                <marker date="1609636666573" expanded="true" signature="13462:13613" ph="..." />
+                <marker date="1609636794917" expanded="true" signature="12619:13103" ph="..." />
+                <marker date="1609636794917" expanded="true" signature="12728:13103" ph="..." />
+                <marker date="1609636794917" expanded="true" signature="13145:13623" ph="..." />
+                <marker date="1609636794917" expanded="true" signature="13454:13455" ph="..." />
+                <marker date="1609636794917" expanded="true" signature="13472:13623" ph="..." />
               </folding>
             </state>
           </provider>
@@ -275,15 +275,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+        <state relative-caret-position="493">
+          <caret line="40" column="140" selection-start-line="40" selection-start-column="140" selection-end-line="40" selection-end-column="140" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1609636666573" expanded="true" signature="12609:13093" ph="..." />
-            <marker date="1609636666573" expanded="true" signature="12718:13093" ph="..." />
-            <marker date="1609636666573" expanded="true" signature="13135:13613" ph="..." />
-            <marker date="1609636666573" expanded="true" signature="13444:13445" ph="..." />
-            <marker date="1609636666573" expanded="true" signature="13462:13613" ph="..." />
+            <marker date="1609636794917" expanded="true" signature="12619:13103" ph="..." />
+            <marker date="1609636794917" expanded="true" signature="12728:13103" ph="..." />
+            <marker date="1609636794917" expanded="true" signature="13145:13623" ph="..." />
+            <marker date="1609636794917" expanded="true" signature="13454:13455" ph="..." />
+            <marker date="1609636794917" expanded="true" signature="13472:13623" ph="..." />
           </folding>
         </state>
       </provider>
