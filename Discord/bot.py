@@ -303,7 +303,7 @@ async def register(ctx):
 async def deletetourney(ctx):
     global currentTourney
     global currentChallongeTourney
-    if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
+    if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
         if currentTourney != None:
             currentTourney = None
             currentChallongeTourney = None
