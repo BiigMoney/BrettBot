@@ -16,9 +16,21 @@ currentTourney = None
 currentChallongeTourney = None
 
 @tasks.loop(minutes=1440.0)
-async def called_once_a_min():
+async def called_once_a_day():
     clone()
 
+@called_once_a_day.before_loop
+async def before():
+    await client.wait_until_ready()
+
+@tasks.loop(minutes=1.0)
+async def called_once_a_min():
+    if currentTourney != None:
+    global currentTourney
+    global currentChallongeTourney
+        matches = challonge.matches.index(currentChallongeTourney['id'],"open")
+        for match in matches:
+            print(match)
 @called_once_a_min.before_loop
 async def before():
     await client.wait_until_ready()
@@ -34,6 +46,7 @@ async def on_ready():
             global currentChallongeTourney
             currentChallongeTourney = challonge.tournaments.show(url)
             print(str(currentChallongeTourney))
+    called_once_a_day.start()
     called_once_a_min.start()
     print('Bot is ready.')
 
@@ -285,13 +298,6 @@ async def deletetourney(ctx):
 async def keywords(ctx):
     await ctx.send("c:(colors) for colors\no:(word) for oracle text\ncmc:(sign)(value) for cmc\nt:(type) for type\npower:(sign)(value) for power\ntoughness:(sign)(value) for toughness\ncan also use - before c, o, and t to search for opposite\nany other words without a colon are searched for in card title")
 
-@client.command()
-async def getmatches(ctx):
-    global currentTourney
-    global currentChallongeTourney
-    if currentTourney != None:
-        matches = challonge.matches.index(currentChallongeTourney['id'])
-        print(str(matches))
 class Tournament:
     def __init__(self, link):
         self.link = link
