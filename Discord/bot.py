@@ -272,11 +272,15 @@ async def newtournament(ctx, arg):
     global currentChallongeTourney
     if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
         if currentTourney == None:
-            currentTourney = Tournament(arg)
-            url = currentTourney['link'].rsplit('/', 1)[-1]
-            currentChallongeTourney = challonge.tournaments.show(url)
-            await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link.rsplit('/', 1)[-1])["name"])
-
+            try:
+                currentTourney = Tournament(arg)
+                url = currentTourney['link'].rsplit('/', 1)[-1]
+                currentChallongeTourney = challonge.tournaments.show(url)
+                await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link.rsplit('/', 1)[-1])["name"])
+            except:
+                currentChallongeTourney = None
+                currentTourney = None
+                await ctx.send("Failed, there was an error, there's nothing I can do about it but I thought you should know.")
         else:
             await ctx.send("Tournament already in progress")
 
