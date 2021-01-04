@@ -270,7 +270,7 @@ def clone():
 async def newtournament(ctx, arg):
     global currentTourney
     global currentChallongeTourney
-    if str(ctx.guild) == "atw" and str(ctx.author) == "Big Money#7196":
+    if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
         if currentTourney == None:
             try:
                 currentTourney = Tournament(arg)
