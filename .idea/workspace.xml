@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/Discord/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,12 +38,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="7773" />
+          <entry key="py" value="7783" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="7773" />
+          <entry key="Python" value="7783" />
         </counts>
       </usages-collector>
     </session>
@@ -67,11 +65,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
+            <state relative-caret-position="204">
               <caret line="276" column="60" lean-forward="true" selection-start-line="276" selection-start-column="60" selection-end-line="276" selection-end-column="60" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1609736110632" expanded="true" signature="12919:13408" ph="..." />
+                <marker date="1609736580673" expanded="true" signature="12951:13440" ph="..." />
               </folding>
             </state>
           </provider>
@@ -293,11 +291,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
+        <state relative-caret-position="204">
           <caret line="276" column="60" lean-forward="true" selection-start-line="276" selection-start-column="60" selection-end-line="276" selection-end-column="60" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1609736110632" expanded="true" signature="12919:13408" ph="..." />
+            <marker date="1609736580673" expanded="true" signature="12951:13440" ph="..." />
           </folding>
         </state>
       </provider>

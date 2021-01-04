@@ -31,7 +31,7 @@ async def called_once_a_min():
     global currentTourney
     global currentChallongeTourney
     if currentTourney != None:
-        url = currentTourney['link'].rsplit('/', 1)[-1]
+        url = currentTourney.link.rsplit('/', 1)[-1]
         currentChallongeTourney = challonge.tournaments.show(url)
         matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
@@ -289,7 +289,7 @@ async def newtournament(ctx, arg):
 async def register(ctx):
     global currentTourney
     global currentChallongeTourney
-    if currentTourney != None:
+    if currentTourney != None and str(ctx.guild) == "TumbledMTG":
         try:
             challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
             await ctx.send("Added you to the bracket!")
