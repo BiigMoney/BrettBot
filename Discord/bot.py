@@ -211,8 +211,8 @@ async def on_message(message):
                             elif keywords[i] == "is":
                                 if values[i] == "new":
                                     new = c.find('new').text
-                                    print(new)
                                     if not new == "TRUE":
+                                        print(new)
                                         lol = False
                                 else:
                                     lol = False
