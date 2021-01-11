@@ -66,11 +66,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="744">
-              <caret line="172" column="45" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+            <state relative-caret-position="404">
+              <caret line="152" column="60" lean-forward="true" selection-start-line="152" selection-start-column="60" selection-end-line="152" selection-end-column="60" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1610373384582" expanded="true" signature="14648:15137" ph="..." />
+                <marker date="1610373575283" expanded="true" signature="14647:15136" ph="..." />
               </folding>
             </state>
           </provider>
@@ -97,7 +97,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="3" />
     <option name="y" value="-25" />
     <option name="width" value="1694" />
@@ -273,11 +273,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
-          <caret line="172" column="45" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+        <state relative-caret-position="404">
+          <caret line="152" column="60" lean-forward="true" selection-start-line="152" selection-start-column="60" selection-end-line="152" selection-end-column="60" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1610373384582" expanded="true" signature="14648:15137" ph="..." />
+            <marker date="1610373575283" expanded="true" signature="14647:15136" ph="..." />
           </folding>
         </state>
       </provider>

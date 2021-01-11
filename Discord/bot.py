@@ -148,7 +148,7 @@ async def on_message(message):
                                         break
                                     if not (len(colors) == len(values[i])) and not (colors.length == 1):
                                         lol = False
-                                     break
+                                    break
                                 for letter in values[i].lower():
                                     if not letter in colors:
                                         lol = False
