@@ -136,6 +136,19 @@ async def on_message(message):
                                     break
                             elif keywords[i] == "c":
                                 colors = c.find('color').text.lower()
+                                if values[i][0] == "=":
+                                    for letter in values[i].lower():
+                                        if letter == "=":
+                                            continue
+                                        else:
+                                            if not letter in colors:
+                                                lol = False
+                                                break
+                                    if "h" in colors:
+                                        break
+                                    if not (len(colors) == len(values[i])) and not (colors.length == 1):
+                                        lol = False
+                                     break
                                 for letter in values[i].lower():
                                     if not letter in colors:
                                         lol = False
@@ -144,6 +157,20 @@ async def on_message(message):
                                     break
                             elif keywords[i] == "o":
                                 text = c.find('text').text.lower()
+                                if "," in values[i]:
+                                    thevalue = values[i].replace(","," ")
+                                    if (thevalue.startswith("'") and thevalue.endswith("'")) or (thevalue.startswith('"') and thevalue.endswith('"')):
+                                        thevalue = thevalue[2:-2]
+                                        if not thevalue in text:
+                                            lol = False
+                                        break
+                                    else:
+                                        thevalue = values[i].replace(","," ").split(" ")
+                                        for word in thevalue:
+                                            if not word in text:
+                                                lol = False
+                                                break
+                                        break
                                 if not values[i].lower() in text:
                                     lol = False
                                     break
