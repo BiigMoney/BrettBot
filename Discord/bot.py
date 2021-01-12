@@ -37,13 +37,15 @@ async def called_once_a_min():
         for match in matches:
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
-                channel = client.get_channel(795075875611607060)
-                guild = client.get_guild(455612893900308501)
-                player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
-                player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
+                try:
+                    channel = client.get_channel(795075875611607060)
+                    guild = client.get_guild(455612893900308501)
+                    player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
+                    player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
+                    await channel.send(guild.get_member_named(player1).mention + guild.get_member_named(player2).mention + " you two have a match!")
+                except:
+                    await channel.send("A match has been started but one of the players was not found in this discord.")
 
-                await channel.send(guild.get_member_named(player1).mention + guild.get_member_named(player2).mention + " you two have a match!")
-                print("done")
 
 @called_once_a_min.before_loop
 async def before():
