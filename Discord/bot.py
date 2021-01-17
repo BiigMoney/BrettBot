@@ -39,9 +39,9 @@ async def called_once_a_min():
                 break
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
+                channel = client.get_channel(795075875611607060)
+                guild = client.get_guild(455612893900308501)
                 try:
-                    channel = client.get_channel(630930138854326283)
-                    guild = client.get_guild(630930138388889631)
                     player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
                     player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
                     await channel.send(guild.get_member_named(player1).mention + guild.get_member_named(player2).mention + " you two have a match!")
@@ -321,11 +321,14 @@ async def register(ctx):
     global currentTourney
     global currentChallongeTourney
     if currentTourney != None and str(ctx.guild) == "TumbledMTG":
-        try:
-            challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
-            await ctx.send("Added you to the bracket!")
-        except:
-            await ctx.send("There was an error, I think you have already registered.")
+        if currentChallongeTourney['started_at'] == None:
+            try:
+                challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
+                await ctx.send("Added you to the bracket!")
+            except:
+                await ctx.send("There was an error, I think you have already registered.")
+        else:
+            await ctx.send("Tournament has already started.")
     else:
             await ctx.send("There is no tournament to register for!")
 
