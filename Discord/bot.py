@@ -35,6 +35,7 @@ async def called_once_a_min():
         currentChallongeTourney = challonge.tournaments.show(url)
         matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
+            print(matches)
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 try:
