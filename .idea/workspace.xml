@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/Discord/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,12 +41,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="8523" />
+          <entry key="py" value="8554" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="8523" />
+          <entry key="Python" value="8554" />
         </counts>
       </usages-collector>
     </session>
@@ -70,11 +68,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+            <state relative-caret-position="561">
+              <caret line="45" column="108" lean-forward="true" selection-start-line="45" selection-start-column="108" selection-end-line="45" selection-end-column="108" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1610894231268" expanded="true" signature="14830:15319" ph="..." />
+                <marker date="1610894622696" expanded="true" signature="14900:15389" ph="..." />
               </folding>
             </state>
           </provider>
@@ -102,10 +100,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1688" />
-    <option name="y" value="204" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" value="-40" />
+    <option name="y" value="-11" />
+    <option name="width" value="1482" />
+    <option name="height" value="996" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -232,7 +230,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1688" y="204" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15384616" />
@@ -277,11 +275,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+        <state relative-caret-position="561">
+          <caret line="45" column="108" lean-forward="true" selection-start-line="45" selection-start-column="108" selection-end-line="45" selection-end-column="108" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1610894231268" expanded="true" signature="14830:15319" ph="..." />
+            <marker date="1610894622696" expanded="true" signature="14900:15389" ph="..." />
           </folding>
         </state>
       </provider>

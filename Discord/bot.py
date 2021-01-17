@@ -35,12 +35,13 @@ async def called_once_a_min():
         currentChallongeTourney = challonge.tournaments.show(url)
         matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
-            print(matches)
+            if match['player1_id'] == None or match['player2_id'] == None:
+                break
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 try:
-                    channel = client.get_channel(795075875611607060)
-                    guild = client.get_guild(455612893900308501)
+                    channel = client.get_channel(630930138854326283)
+                    guild = client.get_guild(630930138388889631)
                     player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
                     player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
                     await channel.send(guild.get_member_named(player1).mention + guild.get_member_named(player2).mention + " you two have a match!")
