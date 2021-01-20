@@ -36,7 +36,7 @@ async def called_once_a_min():
         matches = challonge.matches.index(currentChallongeTourney['id'])
         for match in matches:
             if match['player1_id'] == None or match['player2_id'] == None:
-                break
+                continue
             if match['underway_at'] == None:
                 challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
                 channel = client.get_channel(795075875611607060)
