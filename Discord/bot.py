@@ -7,7 +7,10 @@ import json
 import glob
 import re
 from datetime import datetime
+from datetime import timedelta
 import challonge
+import requests
+from random import randrange
 
 intents = discord.Intents.default()
 intents.members = True
@@ -15,8 +18,12 @@ intents.members = True
 client = commands.Bot(command_prefix = '-', case_insensitive=True, intents=intents)
 validKeyWords=["cmc","o","t","c","-o","power","toughness","type","-c","-t","-type","p","is"]
 valueKeyWords = ["cmc"]
-currentTourney = None
-currentChallongeTourney = None
+tournamentData = None
+
+def updateJSON():
+    global tournamentData
+    with open('tournament.json', 'w') as file:
+        json.dump({"data":tournamentData}, file)
 
 @tasks.loop(minutes=1440.0)
 async def called_once_a_day():
@@ -26,27 +33,89 @@ async def called_once_a_day():
 async def before():
     await client.wait_until_ready()
 
-@tasks.loop(minutes=5.0)
-async def called_once_a_min():
-    global currentTourney
-    global currentChallongeTourney
-    if currentTourney != None:
-        url = currentTourney['link'].rsplit('/', 1)[-1]
-        currentChallongeTourney = challonge.tournaments.show(url)
-        matches = challonge.matches.index(currentChallongeTourney['id'])
+async def checkToStartWeekly():
+    global tournamentData
+    tourney = tournamentData['weekly']
+    weekday = datetime.today().weekday()
+    hour = datetime.now().hour
+    if weekday == 2 and hour == 20:
+        if tourney != None:
+            challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+            if challongeTourney['started_at'] == None:
+                channel = client.get_channel(795075875611607060)
+                try:
+                    for player in tourney['players']:
+                        body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
+                                                  str(player['name']).split("#")[0], player['decklist']).__dict__
+                        r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/decklist', json=body)
+                        if 'decklist' in r.json():
+                            player['decklist'] = "https://tumbledmtg.com/decklist=" + str(r.json()['decklist']['id'])
+                        else:
+                            print(r.json())
+                except:
+                    await channel.send("Something went wrong when uploading player decklists. Idk what to do, everything is broken, someone please help I can't do this on my own.")
+                    return
+                updateJSON()
+                challonge.tournaments.update(challongeTourney['id'], description=json.dumps(tourney['players']))
+                challonge.tournaments.start(challongeTourney['id'])
+                await channel.send("The weekly tournament is starting! Decklists have been uploaded.")
+
+async def checkToEndWeekly():
+    global tournamentData
+    channel = client.get_channel(795075875611607060)
+    tourney = tournamentData['weekly']
+    if tourney != None:
+        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        print(str(challongeTourney['progress_meter']))
+        if challongeTourney['progress_meter'] == 100:
+            challonge.tournaments.finalize(challongeTourney['id'])
+            tournamentData['weekly'] = None
+            updateJSON()
+            await channel.send("The weekly has finished! You can see the results at " + str(challongeTourney['full_challonge_url'] +", and you can check out the decklists at https://tumbledmtg.com/decklists=&pg=1"))
+            newChallongeTourney = challonge.tournaments.create(
+                url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y")) + str(randrange(10000)),
+                start_at=datetime.today() + timedelta((4 - datetime.today().weekday()) % 7),
+                name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4 - datetime.today().weekday()) % 7))[
+                                            0:10])
+            tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
+            updateJSON()
+            await channel.send(
+                "The next weekly has been created. DM me '-weeklyregister (decklist)' before 6pm PST Friday to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " +
+                newChallongeTourney['full_challonge_url'])
+    else:
+        try:
+            newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
+            tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
+            updateJSON()
+            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
+        except:
+            print("Challonge request failed")
+async def callMatches(tourney):
+    if tourney != None:
+        url = tourney['link'].rsplit('/', 1)[-1]
+        challongeTourney = challonge.tournaments.show(url)
+        matches = challonge.matches.index(challongeTourney['id'])
         for match in matches:
             if match['player1_id'] == None or match['player2_id'] == None:
                 continue
             if match['underway_at'] == None:
-                challonge.matches.mark_as_underway(currentChallongeTourney['id'], match['id'])
+                challonge.matches.mark_as_underway(challongeTourney['id'], match['id'])
                 channel = client.get_channel(795075875611607060)
                 guild = client.get_guild(455612893900308501)
                 try:
-                    player1 = str(challonge.participants.show(currentChallongeTourney['id'],match['player1_id'])['name'])
-                    player2 = str(challonge.participants.show(currentChallongeTourney['id'],match['player2_id'])['name'])
+                    player1 = str(challonge.participants.show(challongeTourney['id'],match['player1_id'])['name'])
+                    player2 = str(challonge.participants.show(challongeTourney['id'],match['player2_id'])['name'])
                     await channel.send(guild.get_member_named(player1).mention + guild.get_member_named(player2).mention + " you two have a match!")
                 except:
-                    await channel.send("A match has been started but one of the players was not found in this discord.")
+                    await channel.send("A match has started but one of the players was not found in this discord.")
+
+@tasks.loop(minutes=5.0)
+async def called_once_a_min():
+    global tournamentData
+    await checkToEndWeekly()
+    await checkToStartWeekly()
+    await callMatches(tournamentData['main'])
+    await callMatches(tournamentData['weekly'])
 
 
 @called_once_a_min.before_loop
@@ -58,12 +127,9 @@ async def on_ready():
     if path.exists("tournament.json"):
         with open('tournament.json', 'r') as file:
             data = file.read()
-            global currentTourney
-            currentTourney = json.loads(data)
-            url = currentTourney['link'].rsplit('/', 1)[-1]
-            global currentChallongeTourney
-            currentChallongeTourney = challonge.tournaments.show(url)
-            print(str(currentChallongeTourney))
+            global tournamentData
+            tournamentData = json.loads(data)['data']
+            print(tournamentData)
     called_once_a_day.start()
     called_once_a_min.start()
     print('Bot is ready.')
@@ -297,51 +363,104 @@ def clone():
     cards = dom.find('cards')
     cards = cards.findall('card')
 
+
 @client.command()
 async def newtournament(ctx, arg):
-    global currentTourney
-    global currentChallongeTourney
+    global tournamentData
     if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
-        if currentTourney == None:
+        if tournamentData['main'] == None:
             try:
-                currentTourney = Tournament(arg)
-                url = currentTourney.link.rsplit('/', 1)[-1]
-                currentChallongeTourney = challonge.tournaments.show(url)
-                await ctx.send("Tournament started with name " + challonge.tournaments.show(currentTourney.link.rsplit('/', 1)[-1])["name"])
+                tournamentData['main'] = Tournament(arg).__dict__
+                print(tournamentData['main'])
+                tourney = challonge.tournaments.show(tournamentData['main']['link'].rsplit('/', 1)[-1])
+                print(tournamentData)
+                updateJSON()
+                await ctx.send("Tournament started with name " + tourney["name"] +", scheduled for " + str(tourney['start_at']))
             except Exception as e:
                 print(e)
-                currentChallongeTourney = None
-                currentTourney = None
+                tournamentData['main'] = None
+                updateJSON()
                 await ctx.send("Failed, there was an error, there's nothing I can do about it but I thought you should know.")
         else:
             await ctx.send("Tournament already in progress")
 
 @client.command()
-async def register(ctx):
-    global currentTourney
-    global currentChallongeTourney
-    if currentTourney != None and str(ctx.guild) == "TumbledMTG":
-        if currentChallongeTourney['started_at'] == None:
+async def registertourney(ctx, *, args):
+    print(args)
+    decklist = args
+    global tournamentData
+    tourney = tournamentData['main']
+    if tourney != None:
+        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        if challongeTourney['started_at'] == None:
+            body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
+                                              str(ctx.author).split("#")[0], decklist).__dict__
+            print(body)
+            r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/testdecklist',
+                              json=body)
+            if 'errors' in r.json():
+                print(r.json())
+                await ctx.send("Invalid decklist: " +r.json()['errors'])
+                return
+            elif 'success' in r.json():
+                await ctx.send("Decklist is valid!")
+            else:
+                await ctx.send("Server error, I think... you have not been registered, try again maybe? If this happens more than once then call for help.")
+                print(r.json())
+                return
             try:
-                challonge.participants.create(currentChallongeTourney['id'], str(ctx.author))
+                challonge.participants.create(challongeTourney['id'], str(ctx.author))
+                tourney['players'].append(Player(str(ctx.author), decklist).__dict__)
+                updateJSON()
                 await ctx.send("Added you to the bracket!")
             except:
-                await ctx.send("There was an error, I think you have already registered.")
+                await ctx.send("There was an error, either you are already registered or challonge failed to respond.")
         else:
-            await ctx.send("Tournament has already started.")
+            await ctx.send("The tournament has already started.")
     else:
-            await ctx.send("There is no tournament to register for!")
+        await ctx.send("There is no tournament to register for!")
 
+@client.command()
+async def registerweekly(ctx, *, args):
+    decklist = args
+    global tournamentData
+    tourney = tournamentData['weekly']
+    if tourney != None:
+        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        if challongeTourney['started_at'] == None:
+            body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
+                                   str(ctx.author).split("#")[0], decklist).__dict__
+            r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/testdecklist',
+                              json=body)
+            if 'errors' in r.json():
+                print(r.json())
+                await ctx.send("Invalid decklist: " + str(r.json()['errors']))
+                return
+            elif 'success' in r.json():
+                await ctx.send("Decklist is valid!")
+            else:
+                await ctx.send("Server error, I think... you have not been registered, try again maybe? If this happens more than once then call for help.")
+                print(r.json())
+                return
+            try:
+                challonge.participants.create(challongeTourney['id'], str(ctx.author))
+                tourney['players'].append(Player(str(ctx.author), decklist).__dict__)
+                updateJSON()
+                await ctx.send("Added you to the bracket!")
+            except:
+                await ctx.send("There was an error, either you are already registered or challonge failed to respond. Maybe try again, and if it doesn't work then call for help.")
+        else:
+            await ctx.send("The tournament has already started.")
+    else:
+        await ctx.send("There is no tournament to register for!")
 
 @client.command()
 async def deletetourney(ctx):
-    global currentTourney
-    global currentChallongeTourney
+    global tournamentData
     if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
-        if currentTourney != None:
-            currentTourney = None
-            currentChallongeTourney = None
-            os.remove("tournament.json")
+        if tournamentData['main'] != None:
+            tournamentData['main'] = None
+            updateJSON()
             await ctx.send("No longer looking at active tourney")
         else:
             await ctx.send("There is no active tourney to delete")
@@ -354,8 +473,19 @@ async def keywords(ctx):
 class Tournament:
     def __init__(self, link):
         self.link = link
-        with open('tournament.json', 'w') as file:
-            json.dump({"link": link},file)
+        self.players = []
+
+class Player:
+    def __init__(self, name, decklist):
+        self.name = name
+        self.decklist = decklist
+
+class decklistRequest:
+    def __init__(self, title, author, body):
+        self.title = title
+        self.author = author
+        self.body = body
+        self.description = "This decklist was automatically generated by the discord bot."
 
 token = ""
 apikey = ""
