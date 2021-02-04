@@ -83,7 +83,7 @@ async def checkToEndWeekly():
             newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
             tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
             updateJSON()
-            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
+            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' before Friday at 6pm to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
         except:
             print("Challonge request failed")
 async def callMatches(tourney):

@@ -42,12 +42,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="14013" />
+          <entry key="py" value="14034" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="14013" />
+          <entry key="Python" value="14034" />
         </counts>
       </usages-collector>
     </session>
@@ -69,12 +69,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+            <state relative-caret-position="561">
+              <caret line="53" column="57" lean-forward="true" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#3627#13959#0" />
-                <marker date="1612413879127" expanded="true" signature="22715:22717" ph="..." />
+                <marker date="1612413986199" expanded="true" signature="22736:22738" ph="..." />
               </folding>
             </state>
           </provider>
@@ -282,12 +282,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+        <state relative-caret-position="561">
+          <caret line="53" column="57" lean-forward="true" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#3627#13959#0" />
-            <marker date="1612413879127" expanded="true" signature="22715:22717" ph="..." />
+            <marker date="1612413986199" expanded="true" signature="22736:22738" ph="..." />
           </folding>
         </state>
       </provider>
