@@ -38,27 +38,34 @@ async def checkToStartWeekly():
     tourney = tournamentData['weekly']
     weekday = datetime.today().weekday()
     hour = datetime.now().hour
-    if weekday == 2 and hour == 20:
+    if weekday == 4 and hour == 18:
         if tourney != None:
             challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
             if challongeTourney['started_at'] == None:
                 channel = client.get_channel(795075875611607060)
-                try:
-                    for player in tourney['players']:
-                        body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
-                                                  str(player['name']).split("#")[0], player['decklist']).__dict__
-                        r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/decklist', json=body)
-                        if 'decklist' in r.json():
-                            player['decklist'] = "https://tumbledmtg.com/decklist=" + str(r.json()['decklist']['id'])
-                        else:
-                            print(r.json())
-                except:
-                    await channel.send("Something went wrong when uploading player decklists. Idk what to do, everything is broken, someone please help I can't do this on my own.")
+                if challongeTourney['participants_count'] < 2:
+                    challonge.tournaments.destroy(challongeTourney['id'])
+                    await channel.send("Tried to start a tournament with less than 2 people, tournament has been aborted.")
+                    tournamentData['weekly'] = None
+                    updateJSON()
                     return
-                updateJSON()
-                challonge.tournaments.update(challongeTourney['id'], description=json.dumps(tourney['players']))
-                challonge.tournaments.start(challongeTourney['id'])
-                await channel.send("The weekly tournament is starting! Decklists have been uploaded.")
+                else:
+                    try:
+                        for player in tourney['players']:
+                            body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
+                                                      str(player['name']).split("#")[0], player['decklist']).__dict__
+                            r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/decklist', json=body)
+                            if 'decklist' in r.json():
+                                player['decklist'] = "https://tumbledmtg.com/decklist=" + str(r.json()['decklist']['id'])
+                            else:
+                                print(r.json())
+                    except:
+                        await channel.send("Something went wrong when uploading player decklists. Idk what to do, everything is broken, someone please help I can't do this on my own.")
+                        return
+                    updateJSON()
+                    challonge.tournaments.update(challongeTourney['id'], description=json.dumps(tourney['players']))
+                    challonge.tournaments.start(challongeTourney['id'])
+                    await channel.send("The weekly tournament is starting! Decklists have been uploaded.")
 
 async def checkToEndWeekly():
     global tournamentData
@@ -71,17 +78,6 @@ async def checkToEndWeekly():
             challonge.tournaments.finalize(challongeTourney['id'])
             tournamentData['weekly'] = None
             updateJSON()
-            await channel.send("The weekly has finished! You can see the results at " + str(challongeTourney['full_challonge_url'] +", and you can check out the decklists at https://tumbledmtg.com/decklists=&pg=1"))
-            newChallongeTourney = challonge.tournaments.create(
-                url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y")) + str(randrange(10000)),
-                start_at=datetime.today() + timedelta((4 - datetime.today().weekday()) % 7),
-                name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4 - datetime.today().weekday()) % 7))[
-                                            0:10])
-            tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
-            updateJSON()
-            await channel.send(
-                "The next weekly has been created. DM me '-weeklyregister (decklist)' before 6pm PST Friday to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " +
-                newChallongeTourney['full_challonge_url'])
     else:
         try:
             newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
