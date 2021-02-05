@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="" />
+    <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/Discord/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,13 +23,13 @@
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.24" value="2" />
           <entry key="project.open.time.25" value="1" />
-          <entry key="project.open.time.26" value="3" />
+          <entry key="project.open.time.26" value="4" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.50" value="1" />
           <entry key="project.open.time.53" value="1" />
           <entry key="project.open.time.67" value="1" />
           <entry key="project.open.time.71" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -42,12 +44,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="14034" />
+          <entry key="py" value="18376" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="14034" />
+          <entry key="Python" value="18376" />
         </counts>
       </usages-collector>
     </session>
@@ -69,12 +71,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="53" column="57" lean-forward="true" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
+            <state relative-caret-position="265">
+              <caret line="587" column="11" lean-forward="true" selection-start-line="587" selection-start-column="11" selection-end-line="587" selection-end-column="11" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#3627#13959#0" />
-                <marker date="1612413986199" expanded="true" signature="22736:22738" ph="..." />
+                <element signature="e#4356#5489#0" />
+                <element signature="e#5773#5804#0" />
+                <element signature="e#5846#6171#0" />
+                <element signature="e#6223#16555#0" />
+                <marker date="1612514605890" expanded="true" signature="25432:33785" ph="..." />
+                <marker date="1612514605890" expanded="true" signature="30320:30322" ph="..." />
+                <marker date="1612514605890" expanded="true" signature="34589:34591" ph="..." />
               </folding>
             </state>
           </provider>
@@ -85,14 +92,15 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>lol = f</find>
-      <find>print</find>
       <find>valuekeywo</find>
       <find>type</find>
       <find>link</find>
       <find>random</find>
       <find>tourney[</find>
       <find>channel =</find>
-      <find>channel =</find>
+      <find>6pm</find>
+      <find>challonge</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -107,8 +115,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-187" />
-    <option name="y" value="-11" />
+    <option name="x" value="-227" />
+    <option name="y" value="-19" />
     <option name="width" value="1586" />
     <option name="height" value="996" />
   </component>
@@ -117,7 +125,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,6 +136,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -240,7 +248,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12539515" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.102212854" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -282,12 +290,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="53" column="57" lean-forward="true" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
+        <state relative-caret-position="265">
+          <caret line="587" column="11" lean-forward="true" selection-start-line="587" selection-start-column="11" selection-end-line="587" selection-end-column="11" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#3627#13959#0" />
-            <marker date="1612413986199" expanded="true" signature="22736:22738" ph="..." />
+            <element signature="e#4356#5489#0" />
+            <element signature="e#5773#5804#0" />
+            <element signature="e#5846#6171#0" />
+            <element signature="e#6223#16555#0" />
+            <marker date="1612514605890" expanded="true" signature="25432:33785" ph="..." />
+            <marker date="1612514605890" expanded="true" signature="30320:30322" ph="..." />
+            <marker date="1612514605890" expanded="true" signature="34589:34591" ph="..." />
           </folding>
         </state>
       </provider>

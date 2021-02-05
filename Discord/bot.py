@@ -73,11 +73,59 @@ async def checkToEndWeekly():
     tourney = tournamentData['weekly']
     if tourney != None:
         challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
-        print(str(challongeTourney['progress_meter']))
         if challongeTourney['progress_meter'] == 100:
+            participants = challonge.participants.index(challongeTourney['id'])
             challonge.tournaments.finalize(challongeTourney['id'])
+            if challongeTourney['participants_count'] < 5:
+                try:
+                    for participant in participants:
+                        if participant['final_rank'] == 1:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 1})
+                except:
+                    await channel.send("Failed to update star count for tourney with 4 or less players.")
+            elif challongeTourney['participants_count'] < 9:
+                try:
+                    for participant in participants:
+                        if participant['final_rank'] == 1:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 2})
+                        elif participant['final_rank'] == 2:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                except:
+                    await channel.send("Failed to update star count for tourney with 8 or less players.")
+            else:
+                try:
+                    for participant in participants:
+                        if participant['final_rank'] == 1:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 3})
+                        elif participant['final_rank'] == 2:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 2})
+                        elif participant['final_rank'] == 3:
+                            name = participant['name']
+                            for player in tourney['players']:
+                                if player['name'] == name:
+                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                except:
+                    await channel.send("Failed to update star count for tourney with 9 or more players.")
+
+
             tournamentData['weekly'] = None
             updateJSON()
+
     else:
         try:
             newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
@@ -87,6 +135,7 @@ async def checkToEndWeekly():
         except:
             print("Challonge request failed")
 async def callMatches(tourney):
+    return
     if tourney != None:
         url = tourney['link'].rsplit('/', 1)[-1]
         challongeTourney = challonge.tournaments.show(url)
@@ -367,27 +416,28 @@ async def newtournament(ctx, arg):
         if tournamentData['main'] == None:
             try:
                 tournamentData['main'] = Tournament(arg).__dict__
-                print(tournamentData['main'])
                 tourney = challonge.tournaments.show(tournamentData['main']['link'].rsplit('/', 1)[-1])
-                print(tournamentData)
                 updateJSON()
                 await ctx.send("Tournament started with name " + tourney["name"] +", scheduled for " + str(tourney['start_at']))
             except Exception as e:
                 print(e)
                 tournamentData['main'] = None
                 updateJSON()
-                await ctx.send("Failed, there was an error, there's nothing I can do about it but I thought you should know.")
+                await ctx.send("Failed, likely a challonge error.")
         else:
             await ctx.send("Tournament already in progress")
 
 @client.command()
 async def registertourney(ctx, *, args):
-    print(args)
     decklist = args
     global tournamentData
     tourney = tournamentData['main']
     if tourney != None:
-        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        try:
+            challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        except:
+            await ctx.send("Error getting challonge bracket, please try again.")
+            return
         if challongeTourney['started_at'] == None:
             body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
                                               str(ctx.author).split("#")[0], decklist).__dict__
@@ -422,7 +472,10 @@ async def registerweekly(ctx, *, args):
     global tournamentData
     tourney = tournamentData['weekly']
     if tourney != None:
-        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        try:
+            challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        except:
+            await ctx.send("Error getting challonge bracket, please try again.")
         if challongeTourney['started_at'] == None:
             body = decklistRequest((str(challongeTourney['start_at'])[0:10] + " Weekly Decklist"),
                                    str(ctx.author).split("#")[0], decklist).__dict__
@@ -460,6 +513,194 @@ async def deletetourney(ctx):
             await ctx.send("No longer looking at active tourney")
         else:
             await ctx.send("There is no active tourney to delete")
+
+@client.command()
+async def weeklyreport(ctx, *args):
+    if len(args) != 2:
+        await ctx.send("Invalid report syntax.")
+        return
+    score = args[0]
+    opponent = ctx.message.mentions[0]
+    if opponent == None:
+        await ctx.send("Invalid opponent.")
+        return
+    if len(score) != 3:
+        await ctx.send("Invalid score syntax.")
+        return
+    playerscore = score[0]
+    opponentscore = score[2]
+    if type(playerscore) != int or type(opponentscore) != int or score[1] != "-":
+        await ctx.send("Invalid score syntax.")
+        return
+    if playerscore == 0 and opponentscore == 0:
+        await ctx.send("I'm not submitting this score and you can't make me.")
+        return
+    if playerscore == opponentscore:
+        await ctx.send("Why are you submitting a tie, why why why why why why why why why why.")
+        return
+    opponent = opponent.name + "#" + str(opponent.discriminator)
+    player = ctx.author.name + "#" + str(ctx.author.discriminator)
+    global tournamentData
+    tourney = tournamentData['weekly']
+    try:
+        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        matches = challonge.matches.index(challongeTourney['id'])
+        participants = challonge.participants.index(challongeTourney['id'])
+    except:
+        await ctx.send("Challonge failed to respond, please try again.")
+    playerid = ""
+    opponentid = ""
+    try:
+        for participant in participants:
+            if participant['name'] == player:
+                playerid = participant['id']
+            elif participant['name'] == opponent:
+                opponentid = participant['id']
+    except:
+        await ctx.send("Error parsing tourney participants, most likely a challonge error, try again.")
+        return
+    lol = False
+    try:
+        for match in matches:
+            if match['winner_id'] != None or match['state'] != "open":
+                continue
+            if match['player1_id'] == playerid and match['player2_id'] == opponentid:
+                if playerscore > opponentscore:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=playerid)
+                    lol = True
+                    break
+                else:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=opponentid)
+                    lol = True
+                    break
+            elif match['player1_id'] == opponentid and match['player2_id'] == playerid:
+                temp = score[2]
+                score[2] = score[0]
+                score[0] = temp
+                if playerscore > opponentscore:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=playerid)
+                    lol = True
+                    break
+                else:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=opponentid)
+                    lol = True
+                    break
+    except:
+        await ctx.send("Error updating scores, probably a challonge error as an actual error was thrown. Try again, and if it happens again, call for help.")
+        return
+    if not lol:
+        await ctx.send("Error updating scores,")
+    await ctx.send("Scores have successfully been submitted!")
+
+@client.command()
+async def uploaddecklists(ctx):
+    global tournamentData
+    if str(ctx.guild) == "TumbledMTG" and str(ctx.author) == "Tumbles#3232":
+        tourney = tournamentData['main']
+        try:
+            challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        except:
+            await ctx.send("Challonge server error, please try again.")
+            return
+        try:
+            for player in tourney['players']:
+                body = decklistRequest("Tourney Decklist",
+                                       str(player['name']).split("#")[0], player['decklist']).__dict__
+                r = requests.post('https://us-central1-tumbledmtg-website.cloudfunctions.net/api/decklist', json=body)
+                if 'decklist' in r.json():
+                    player['decklist'] = "https://tumbledmtg.com/decklist=" + str(r.json()['decklist']['id'])
+                else:
+                    print(r.json())
+        except:
+            await ctx.send("Something went wrong when uploading player decklists. Idk what to do, everything is broken, someone please help I can't do this on my own.")
+            return
+        updateJSON()
+        try:
+            challonge.tournaments.update(challongeTourney['id'], description=json.dumps(tourney['players']))
+        except:
+            await ctx.send("Challonge server error when updating description, everything else worked I think, but descrition will have to be updated manually.")
+            return
+        await ctx.send("Decklists have been uploaded!")
+
+@client.command()
+async def tourneyreport(ctx, *args):
+    if len(args) != 2:
+        await ctx.send("Invalid report syntax.")
+        return
+    score = args[0]
+    opponent = ctx.message.mentions[0]
+    if opponent == None:
+        await ctx.send("Invalid opponent.")
+        return
+    if len(score) != 3:
+        await ctx.send("Invalid score syntax!")
+        return
+    playerscore = score[0]
+    opponentscore = score[2]
+    if not playerscore.isnumeric() or not opponentscore.isnumeric() or score[1] != "-":
+        await ctx.send("Invalid score syntax.")
+        return
+    if playerscore == "0" and opponentscore == "0":
+        await ctx.send("I'm not submitting this score and you can't make me.")
+        return
+    if playerscore == opponentscore:
+        await ctx.send("Why are you submitting a tie, why why why why why why why why why why.")
+        return
+    opponent = opponent.name + "#" + str(opponent.discriminator)
+    player = ctx.author.name + "#" + str(ctx.author.discriminator)
+    global tournamentData
+    tourney = tournamentData['main']
+    try:
+        challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        matches = challonge.matches.index(challongeTourney['id'])
+        participants = challonge.participants.index(challongeTourney['id'])
+    except:
+        await ctx.send("Challonge failed to respond, please try again.")
+        return
+    playerid = ""
+    opponentid = ""
+    try:
+        for participant in participants:
+            if participant['name'] == player:
+                playerid = participant['id']
+            elif participant['name'] == opponent:
+                opponentid = participant['id']
+    except:
+        await ctx.send("Error parsing tourney participants, most likely a challonge error, try again.")
+        return
+    lol = False
+    try:
+        for match in matches:
+            if match['winner_id'] != None or match['state'] != "open":
+                continue
+            if match['player1_id'] == playerid and match['player2_id'] == opponentid:
+                if playerscore > opponentscore:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=playerid)
+                    lol = True
+                    break
+                else:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=opponentid)
+                    lol = True
+                    break
+            elif match['player1_id'] == opponentid and match['player2_id'] == playerid:
+                score = score[-1] + score[1:-1] + score[0]
+                if playerscore > opponentscore:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=playerid)
+                    lol = True
+                    break
+                else:
+                    challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=opponentid)
+                    lol = True
+                    break
+    except Exception as e:
+        print(e)
+        await ctx.send("Error updating scores, probably a challonge error as an actual error was thrown. Try again, and if it happens again, call for help.")
+        return
+    if not lol:
+        await ctx.send("Error updating scores, could not find a match between these 2 players.")
+        return
+    await ctx.send("Scores has successfully been submitted!")
+
 
 
 @client.command()
