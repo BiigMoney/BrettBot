@@ -459,6 +459,8 @@ async def registertourney(ctx, *, args):
                 tourney['players'].append(Player(str(ctx.author), decklist).__dict__)
                 updateJSON()
                 await ctx.send("Added you to the bracket!")
+                channel = client.get_channel(795075875611607060)
+                await channel.send(str(ctx.author) + " has registered for the tournament!")
             except:
                 await ctx.send("There was an error, either you are already registered or challonge failed to respond.")
         else:
@@ -496,6 +498,8 @@ async def registerweekly(ctx, *, args):
                 tourney['players'].append(Player(str(ctx.author), decklist).__dict__)
                 updateJSON()
                 await ctx.send("Added you to the bracket!")
+                channel = client.get_channel(795075875611607060)
+                await channel.send(str(ctx.author) + " has registered for the weekly!")
             except:
                 await ctx.send("There was an error, either you are already registered or challonge failed to respond. Maybe try again, and if it doesn't work then call for help.")
         else:
