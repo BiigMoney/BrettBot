@@ -64,6 +64,7 @@ async def checkToStartWeekly():
                         return
                     updateJSON()
                     challonge.tournaments.update(challongeTourney['id'], description=json.dumps(tourney['players']))
+                    challonge.participants.randomize(challongeTourney['id'])
                     challonge.tournaments.start(challongeTourney['id'])
                     await channel.send("The weekly tournament is starting! Decklists have been uploaded.")
 
