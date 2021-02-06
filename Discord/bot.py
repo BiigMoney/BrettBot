@@ -528,14 +528,14 @@ async def weeklyreport(ctx, *args):
         await ctx.send("Invalid opponent.")
         return
     if len(score) != 3:
-        await ctx.send("Invalid score syntax.")
+        await ctx.send("Invalid score syntax!")
         return
     playerscore = score[0]
     opponentscore = score[2]
-    if type(playerscore) != int or type(opponentscore) != int or score[1] != "-":
+    if not playerscore.isnumeric() or not opponentscore.isnumeric() or score[1] != "-":
         await ctx.send("Invalid score syntax.")
         return
-    if playerscore == 0 and opponentscore == 0:
+    if playerscore == "0" and opponentscore == "0":
         await ctx.send("I'm not submitting this score and you can't make me.")
         return
     if playerscore == opponentscore:
@@ -551,6 +551,7 @@ async def weeklyreport(ctx, *args):
         participants = challonge.participants.index(challongeTourney['id'])
     except:
         await ctx.send("Challonge failed to respond, please try again.")
+        return
     playerid = ""
     opponentid = ""
     try:
@@ -577,9 +578,7 @@ async def weeklyreport(ctx, *args):
                     lol = True
                     break
             elif match['player1_id'] == opponentid and match['player2_id'] == playerid:
-                temp = score[2]
-                score[2] = score[0]
-                score[0] = temp
+                score = score[-1] + score[1:-1] + score[0]
                 if playerscore > opponentscore:
                     challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=playerid)
                     lol = True
@@ -588,12 +587,14 @@ async def weeklyreport(ctx, *args):
                     challonge.matches.update(challongeTourney['id'], match['id'], scores_csv=score, winner_id=opponentid)
                     lol = True
                     break
-    except:
+    except Exception as e:
+        print(e)
         await ctx.send("Error updating scores, probably a challonge error as an actual error was thrown. Try again, and if it happens again, call for help.")
         return
     if not lol:
-        await ctx.send("Error updating scores,")
-    await ctx.send("Scores have successfully been submitted!")
+        await ctx.send("Error updating scores, could not find a match between these 2 players.")
+        return
+    await ctx.send("Scores has successfully been submitted!")
 
 @client.command()
 async def uploaddecklists(ctx):
