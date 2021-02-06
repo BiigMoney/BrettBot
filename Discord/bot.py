@@ -135,7 +135,6 @@ async def checkToEndWeekly():
         except:
             print("Challonge request failed")
 async def callMatches(tourney):
-    return
     if tourney != None:
         url = tourney['link'].rsplit('/', 1)[-1]
         challongeTourney = challonge.tournaments.show(url)

@@ -24,12 +24,13 @@
           <entry key="project.open.time.24" value="2" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.26" value="4" />
+          <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.50" value="1" />
           <entry key="project.open.time.53" value="1" />
           <entry key="project.open.time.67" value="1" />
           <entry key="project.open.time.71" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -72,16 +73,12 @@
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="469">
-              <caret line="452" column="17" lean-forward="true" selection-start-line="452" selection-start-column="17" selection-end-line="452" selection-end-column="17" />
+              <caret line="132" column="24" lean-forward="true" selection-start-line="132" selection-start-column="24" selection-end-line="132" selection-end-column="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#4356#5489#0" />
-                <element signature="e#5773#5804#0" />
-                <element signature="e#5846#6171#0" />
-                <element signature="e#6223#16555#0" />
-                <marker date="1612515032081" expanded="true" signature="25742:34095" ph="..." />
-                <marker date="1612515032081" expanded="true" signature="30630:30632" ph="..." />
-                <marker date="1612515032081" expanded="true" signature="34899:34901" ph="..." />
+                <marker date="1612577028012" expanded="true" signature="25731:34084" ph="..." />
+                <marker date="1612577028012" expanded="true" signature="30619:30621" ph="..." />
+                <marker date="1612577028012" expanded="true" signature="34888:34890" ph="..." />
               </folding>
             </state>
           </provider>
@@ -114,7 +111,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-227" />
     <option name="y" value="-19" />
     <option name="width" value="1586" />
@@ -245,7 +242,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.102212854" />
@@ -291,16 +288,12 @@
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="469">
-          <caret line="452" column="17" lean-forward="true" selection-start-line="452" selection-start-column="17" selection-end-line="452" selection-end-column="17" />
+          <caret line="132" column="24" lean-forward="true" selection-start-line="132" selection-start-column="24" selection-end-line="132" selection-end-column="24" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#4356#5489#0" />
-            <element signature="e#5773#5804#0" />
-            <element signature="e#5846#6171#0" />
-            <element signature="e#6223#16555#0" />
-            <marker date="1612515032081" expanded="true" signature="25742:34095" ph="..." />
-            <marker date="1612515032081" expanded="true" signature="30630:30632" ph="..." />
-            <marker date="1612515032081" expanded="true" signature="34899:34901" ph="..." />
+            <marker date="1612577028012" expanded="true" signature="25731:34084" ph="..." />
+            <marker date="1612577028012" expanded="true" signature="30619:30621" ph="..." />
+            <marker date="1612577028012" expanded="true" signature="34888:34890" ph="..." />
           </folding>
         </state>
       </provider>
