@@ -594,7 +594,7 @@ async def weeklyreport(ctx, *args):
     if not lol:
         await ctx.send("Error updating scores, could not find a match between these 2 players.")
         return
-    await ctx.send("Scores has successfully been submitted!")
+    await ctx.send("Scores have successfully been submitted!")
 
 @client.command()
 async def uploaddecklists(ctx):
@@ -703,7 +703,7 @@ async def tourneyreport(ctx, *args):
     if not lol:
         await ctx.send("Error updating scores, could not find a match between these 2 players.")
         return
-    await ctx.send("Scores has successfully been submitted!")
+    await ctx.send("Scores have successfully been submitted!")
 
 
 
