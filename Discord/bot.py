@@ -38,11 +38,13 @@ async def checkToStartWeekly():
     tourney = tournamentData['weekly']
     weekday = datetime.today().weekday()
     hour = datetime.now().hour
-    if weekday == 4 and hour == 18:
+    channel = client.get_channel(795075875611607060)
+    if weekday == 4 and hour == 14:
+        await channel.send("Don't forget, the weekly is starting in 4 hours! DM me '-registerweekly (decklist)' to sign up, replacing (decklist) with the decklist you want to use for the tournament.")
+    elif weekday == 4 and hour == 18:
         if tourney != None:
             challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
             if challongeTourney['started_at'] == None:
-                channel = client.get_channel(795075875611607060)
                 if challongeTourney['participants_count'] < 2:
                     challonge.tournaments.destroy(challongeTourney['id'])
                     await channel.send("Tried to start a tournament with less than 2 people, tournament has been aborted.")
@@ -84,7 +86,9 @@ async def checkToEndWeekly():
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 1})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 1})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 1")
                 except:
                     await channel.send("Failed to update star count for tourney with 4 or less players.")
             elif challongeTourney['participants_count'] < 9:
@@ -94,12 +98,16 @@ async def checkToEndWeekly():
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 2})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 2})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 2")
                         elif participant['final_rank'] == 2:
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 3")
                 except:
                     await channel.send("Failed to update star count for tourney with 8 or less players.")
             else:
@@ -109,21 +117,27 @@ async def checkToEndWeekly():
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 3})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc" : 3})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 4")
                         elif participant['final_rank'] == 2:
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 2})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 2})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 5")
                         elif participant['final_rank'] == 3:
                             name = participant['name']
                             for player in tourney['players']:
                                 if player['name'] == name:
-                                    requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                                    r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + player['decklist'].rsplit('/', 1)[-1].split("=")[1], json={"inc": 1})
+                                    if not 'success' in r.json():
+                                        await channel.send("Unsuccessful star count update. 6")
                 except:
                     await channel.send("Failed to update star count for tourney with 9 or more players.")
 
-
+            await channel.send("The weekly has finished. You can see the results and decklists at https://tumbledmtg.com/tournament=" + str(challongeTourney['id']))
             tournamentData['weekly'] = None
             updateJSON()
 
@@ -132,7 +146,7 @@ async def checkToEndWeekly():
             newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
             tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
             updateJSON()
-            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' before Friday at 6pm to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
+            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' before Friday at 6pm PST to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
         except:
             print("Challonge request failed")
 async def callMatches(tourney):
