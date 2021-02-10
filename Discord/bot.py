@@ -76,6 +76,8 @@ async def checkToEndWeekly():
     tourney = tournamentData['weekly']
     if tourney != None:
         challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
+        weekday = datetime.today().weekday()
+        hour = datetime.now().hour
         if challongeTourney['progress_meter'] == 100:
             participants = challonge.participants.index(challongeTourney['id'])
             challonge.tournaments.finalize(challongeTourney['id'])
@@ -140,13 +142,17 @@ async def checkToEndWeekly():
             await channel.send("The weekly has finished. You can see the results and decklists at https://tumbledmtg.com/tournament=" + str(challongeTourney['id']))
             tournamentData['weekly'] = None
             updateJSON()
-
+        elif weekday == 3 and hour == 18:
+            await channel.send("The current weekly is taking too long, all remaining matches and stars will have to be updated manually. You can check out the bracket at " + tourney['link'])
+            tournamentData['weekly'] = None
+            updateJSON()
     else:
         try:
-            newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
-            tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
-            updateJSON()
-            await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' before Friday at 6pm PST to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
+            if weekday == 3 and hour == 18:
+                newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
+                tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
+                updateJSON()
+                await channel.send("The next weekly has been created. DM me '-registerweekly (decklist)' before Friday at 6pm PST to sign up, replacing (decklist) with the decklist you want to use for the tournament. You can find the bracket at " + newChallongeTourney['full_challonge_url'])
         except:
             print("Challonge request failed")
 async def callMatches(tourney):
@@ -411,6 +417,32 @@ async def update(ctx):
     clone()
     await ctx.send("Updated.")
 
+@client.command()
+async def updatestars(ctx, decklist, stars):
+    if ctx.author != "Tumbles#3232":
+        return
+    try:
+        decklistid = decklist.rsplit('/', 1)[-1].split("=")[1]
+        r = requests.put("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/stars/" + decklistid, json={"inc": stars})
+        if 'success' in r.json():
+            await ctx.send("Successfully updated stars.")
+        else:
+            await ctx.send("Response returned errors.")
+    except:
+        await ctx.send("Error sending response.")
+
+@client.command()
+async def deletedecklist(ctx, decklist):
+    if ctx.author != "Tumbles#3232":
+        return
+    try:
+        r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist)
+        if 'success' in r.json():
+            await ctx.send("Successfully deleted decklist.")
+        else:
+            await ctx.send("Request returned errors.")
+    except:
+        await ctx.send("Error sending response.")
 def clone():
     dir = os.getcwd()
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
