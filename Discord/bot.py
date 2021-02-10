@@ -420,7 +420,6 @@ async def update(ctx):
 @client.command()
 async def updatestars(ctx, decklist, stars):
     if str(ctx.author) != "Tumbles#3232":
-        await ctx.send("ha")
         return
     try:
         decklistid = decklist.rsplit('/', 1)[-1].split("=")[1]
