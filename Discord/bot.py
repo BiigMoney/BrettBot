@@ -419,7 +419,7 @@ async def update(ctx):
 
 @client.command()
 async def updatestars(ctx, decklist, stars):
-    if ctx.author != "Tumbles#3232":
+    if str(ctx.author) != "Tumbles#3232":
         await ctx.send("ha")
         return
     try:
@@ -434,7 +434,7 @@ async def updatestars(ctx, decklist, stars):
 
 @client.command()
 async def deletedecklist(ctx, decklist):
-    if ctx.author != "Tumbles#3232":
+    if str(ctx.author) != "Tumbles#3232":
         return
     try:
         r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist)
