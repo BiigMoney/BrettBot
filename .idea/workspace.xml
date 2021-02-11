@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="092f52e1-45cf-4359-97ef-da297a7a8af6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Discord/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Discord/bot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Discord/tournament.json" beforeDir="false" afterPath="$PROJECT_DIR$/Discord/tournament.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/Discord/" />
@@ -75,12 +74,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="424" column="42" selection-start-line="424" selection-start-column="42" selection-end-line="424" selection-end-column="42" />
+            <state relative-caret-position="602">
+              <caret line="438" column="148" selection-start-line="438" selection-start-column="148" selection-end-line="438" selection-end-column="148" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#11040#21372#0" />
-                <marker date="1613000408369" expanded="true" signature="22552:22962" ph="..." />
+                <marker date="1613001715327" expanded="true" signature="22552:22995" ph="..." />
               </folding>
             </state>
           </provider>
@@ -289,12 +288,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="424" column="42" selection-start-line="424" selection-start-column="42" selection-end-line="424" selection-end-column="42" />
+        <state relative-caret-position="602">
+          <caret line="438" column="148" selection-start-line="438" selection-start-column="148" selection-end-line="438" selection-end-column="148" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#11040#21372#0" />
-            <marker date="1613000408369" expanded="true" signature="22552:22962" ph="..." />
+            <marker date="1613001715327" expanded="true" signature="22552:22995" ph="..." />
           </folding>
         </state>
       </provider>

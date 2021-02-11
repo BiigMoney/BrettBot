@@ -436,7 +436,7 @@ async def deletedecklist(ctx, decklist):
     if str(ctx.author) != "Tumbles#3232":
         return
     try:
-        r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist)
+        r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist.rsplit('/', 1)[-1].split("=")[1])
         if 'success' in r.json():
             await ctx.send("Successfully deleted decklist.")
         else:
