@@ -441,8 +441,6 @@ async def deletedecklist(ctx, decklist):
             await ctx.send("Successfully deleted decklist.")
         else:
             await ctx.send("Request returned errors.")
-    except:
-        await ctx.send("Error sending response.")
 def clone():
     dir = os.getcwd()
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
