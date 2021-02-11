@@ -75,12 +75,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Discord/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
-              <caret line="442" column="54" lean-forward="true" selection-start-line="442" selection-start-column="54" selection-end-line="442" selection-end-column="54" />
+            <state relative-caret-position="653">
+              <caret line="441" column="8" selection-start-line="441" selection-start-column="8" selection-end-line="441" selection-end-column="8" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#11040#21372#0" />
-                <marker date="1613001775695" expanded="true" signature="22552:22933" ph="..." />
+                <marker date="1613001801689" expanded="true" signature="22552:22904" ph="..." />
               </folding>
             </state>
           </provider>
@@ -289,12 +289,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Discord/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="442" column="54" lean-forward="true" selection-start-line="442" selection-start-column="54" selection-end-line="442" selection-end-column="54" />
+        <state relative-caret-position="653">
+          <caret line="441" column="8" selection-start-line="441" selection-start-column="8" selection-end-line="441" selection-end-column="8" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#11040#21372#0" />
-            <marker date="1613001775695" expanded="true" signature="22552:22933" ph="..." />
+            <marker date="1613001801689" expanded="true" signature="22552:22904" ph="..." />
           </folding>
         </state>
       </provider>

@@ -435,12 +435,11 @@ async def updatestars(ctx, decklist, stars):
 async def deletedecklist(ctx, decklist):
     if str(ctx.author) != "Tumbles#3232":
         return
-    try:
-        r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist.rsplit('/', 1)[-1].split("=")[1])
-        if 'success' in r.json():
-            await ctx.send("Successfully deleted decklist.")
-        else:
-            await ctx.send("Request returned errors.")
+    r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklist.rsplit('/', 1)[-1].split("=")[1])
+    if 'success' in r.json():
+        await ctx.send("Successfully deleted decklist.")
+    else:
+        await ctx.send("Request returned errors.")
 def clone():
     dir = os.getcwd()
     os.chdir('../../Brett stuff/TumbledMTG-Cockatrice')
