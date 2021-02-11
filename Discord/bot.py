@@ -433,7 +433,7 @@ async def updatestars(ctx, decklist, stars):
 
 @client.command()
 async def deletedecklist(ctx, decklist):
-    if str(ctx.author) != "Big Money#7196":
+    if str(ctx.author) != "Tumbles#3232":
         return
     decklistid = decklist.rsplit('/', 1)[-1].split("=")[1]
     r = requests.delete("https://us-central1-tumbledmtg-website.cloudfunctions.net/api/deldecklist/" + decklistid)
