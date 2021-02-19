@@ -148,7 +148,7 @@ async def checkToEndWeekly():
             updateJSON()
     else:
         try:
-            if weekday == 4 and hour == 2:
+            if weekday == 2 and hour == 18:
                 newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
                 tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
                 updateJSON()
