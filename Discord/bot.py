@@ -79,8 +79,8 @@ async def checkToEndWeekly():
         weekday = datetime.today().weekday()
         hour = datetime.now().hour
         if challongeTourney['progress_meter'] == 100:
-            participants = challonge.participants.index(challongeTourney['id'])
             challonge.tournaments.finalize(challongeTourney['id'])
+            participants = challonge.participants.index(challongeTourney['id'])
             if challongeTourney['participants_count'] < 5:
                 try:
                     for participant in participants:
@@ -142,13 +142,13 @@ async def checkToEndWeekly():
             await channel.send("The weekly has finished. You can see the results and decklists at https://tumbledmtg.com/tournament=" + str(challongeTourney['id']))
             tournamentData['weekly'] = None
             updateJSON()
-        elif weekday == 3 and hour == 18:
+        elif weekday == 2 and hour == 18:
             await channel.send("The current weekly is taking too long, all remaining matches and stars will have to be updated manually. You can check out the bracket at " + tourney['link'])
             tournamentData['weekly'] = None
             updateJSON()
     else:
         try:
-            if weekday == 3 and hour == 18:
+            if weekday == 2 and hour == 18:
                 newChallongeTourney = challonge.tournaments.create(url="tbldmtgweekly" + str(datetime.today().strftime("%d_%m_%Y"))+ str(randrange(10000)), start_at= datetime.today() + timedelta((4-datetime.today().weekday()) % 7), name="TumbledMTG Weekly " + str(datetime.today() + timedelta((4-datetime.today().weekday()) % 7))[0:10])
                 tournamentData['weekly'] = Tournament(newChallongeTourney['full_challonge_url']).__dict__
                 updateJSON()
