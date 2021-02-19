@@ -74,10 +74,10 @@ async def checkToEndWeekly():
     global tournamentData
     channel = client.get_channel(795075875611607060)
     tourney = tournamentData['weekly']
+    weekday = datetime.today().weekday()
+    hour = datetime.now().hour
     if tourney != None:
         challongeTourney = challonge.tournaments.show(tourney['link'].rsplit('/', 1)[-1])
-        weekday = datetime.today().weekday()
-        hour = datetime.now().hour
         if challongeTourney['progress_meter'] == 100:
             challonge.tournaments.finalize(challongeTourney['id'])
             participants = challonge.participants.index(challongeTourney['id'])
