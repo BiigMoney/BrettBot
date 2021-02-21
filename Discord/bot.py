@@ -38,8 +38,9 @@ async def checkToStartWeekly():
     tourney = tournamentData['weekly']
     weekday = datetime.today().weekday()
     hour = datetime.now().hour
+    minute = datetime.now().minute
     channel = client.get_channel(795075875611607060)
-    if weekday == 4 and hour == 14:
+    if weekday == 4 and hour == 14 and minute < 5:
         await channel.send("Don't forget, the weekly is starting in 4 hours! DM me '-registerweekly (decklist)' to sign up, replacing (decklist) with the decklist you want to use for the tournament.")
     elif weekday == 4 and hour == 18:
         if tourney != None:
