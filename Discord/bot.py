@@ -143,6 +143,8 @@ async def checkToEndWeekly():
             await channel.send("The weekly has finished. You can see the results and decklists at https://tumbledmtg.com/tournament=" + str(challongeTourney['id']))
             tournamentData['weekly'] = None
             updateJSON()
+            bigchannel = client.get_channel(326822492222128138)
+            await bigchannel.send("The TumbledMTG weekly tournament just finished!\n\nCheck out the results and decklists used: <https://tumbledmtg.com/tournament=" + str(challongeTourney['id']) + ">\n\nA new single elimination tournament begins every Friday, free to enter with a 10$ prize!")
         elif weekday == 2 and hour == 17:
             await channel.send("The current weekly is taking too long, all remaining matches and stars will have to be updated manually. You can check out the bracket at " + tourney['link'])
             tournamentData['weekly'] = None
